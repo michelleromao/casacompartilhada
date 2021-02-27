@@ -1,4 +1,4 @@
-# casacompartilhada
+# Casa Compartilhada
 Trabalho final da disciplina Fundamentos de Banco de Dados
 
 ![Rostinho](https://user-images.githubusercontent.com/29321606/109376274-2d00e300-78a2-11eb-9db3-35abf3243f83.png)
