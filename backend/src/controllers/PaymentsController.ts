@@ -1,4 +1,5 @@
 import {Request, Response} from 'express';
+import Payments from "../models/Payments";
 
 export = {
   async index(request: Request, response: Response){

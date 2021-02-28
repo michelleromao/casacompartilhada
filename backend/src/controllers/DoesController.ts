@@ -1,4 +1,5 @@
 import {Request, Response} from 'express';
+import Does from "../models/Does";
 
 export = {
   async index(request: Request, response: Response){

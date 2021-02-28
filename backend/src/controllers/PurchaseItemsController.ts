@@ -1,4 +1,5 @@
 import {Request, Response} from 'express';
+import PurchaseItems from "../models/PurchaseItems";
 
 export = {
   async index(request: Request, response: Response){

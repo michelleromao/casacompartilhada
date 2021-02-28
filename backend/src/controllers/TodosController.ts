@@ -1,4 +1,5 @@
 import {Request, Response} from 'express';
+import ToDos from "../models/Todos";
 
 export = {
   async index(request: Request, response: Response){
