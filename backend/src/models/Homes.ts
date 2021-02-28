@@ -1,7 +1,8 @@
 import pool from "../database/index";
 
 interface IHome {
-  name: string
+  name: string;
+  creator_id: string;
 }
 
 class Home{
@@ -9,11 +10,12 @@ class Home{
     try{
       const client = await pool.connect();
       const {
-        name
+        name,
+        creator_id
       } = data;
       const { rows: home } = await client.query(
-        'INSERT INTO home (name) values ($1) RETURNING *',
-        [name]
+        'INSERT INTO home (name, creator_id) values ($1, $2) RETURNING *',
+        [name, creator_id]
       );
       await client.release();
       return home;
@@ -52,7 +54,7 @@ class Home{
     return null;
   }
 
-  static async update(data: IHome, user_id: string){
+  static async update(data: IHome, creator_id: string){
     try{
       const client = await pool.connect();
       const {
@@ -60,7 +62,7 @@ class Home{
       } = data;
       const { rows: home } = await client.query(
         'UPDATE home H SET name = $1 WHERE H.creator_id = $2',
-        [name, user_id]
+        [name, creator_id]
       );
       await client.release();
       return home;
@@ -70,12 +72,12 @@ class Home{
     return null;
   }
 
-  static async findByIdAndDelete(home_id: string, user_id: string){
+  static async findByIdAndDelete(home_id: string, creator_id: string){
     try{
       const client = await pool.connect();
       const { rows: home } = await client.query(
         'DELETE FROM home H where H.id = $1 AND H.creator_id = $2',
-        [home_id, user_id]
+        [home_id, creator_id]
       );
       await client.release();
       return home;

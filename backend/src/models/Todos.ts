@@ -1,14 +1,16 @@
 import pool from "../database/index";
 
-interface IToDo {
+interface IToDos {
   task: string;
   frequency: 'daily' | 'weekly' | 'monthly';
-  day_of_month: number;
   day_of_week: string;
+  day_of_month: number;
+  creator_id: string;
+  home_id: string;
 }
 
-class ToDo{
-  static async create(data: IToDo){
+class ToDos{
+  static async create(data: IToDos){
     try{
       const client = await pool.connect();
       const {
@@ -16,25 +18,27 @@ class ToDo{
         frequency,
         day_of_week,
         day_of_month,
+        creator_id,
+        home_id
       } = data;
       if(frequency === 'daily'){
         const { rows: todo } = await client.query(
-          'INSERT INTO todo (task, frequency) values ($1, $2) RETURNING *',
-          [task, frequency]
+          'INSERT INTO todos (task, frequency, creator_id, home_id) values ($1, $2, $3, $4) RETURNING *',
+          [task, frequency, creator_id, home_id]
         );
         await client.release();
         return todo;
       }else if(frequency === 'weekly'){
         const { rows: todo } = await client.query(
-          'INSERT INTO todo (task, frequency, day_of_week) values ($1, $2, $3) RETURNING *',
-          [task, frequency, day_of_week]
+          'INSERT INTO todos (task, frequency, day_of_week, creator_id, home_id) values ($1, $2, $3, $4, $5) RETURNING *',
+          [task, frequency, day_of_week, creator_id, home_id]
         );
         await client.release();
         return todo;
       }else if(frequency === 'monthly') {
         const { rows: todo } = await client.query(
-          'INSERT INTO todo (task, frequency, day_of_month) values ($1, $2, $3) RETURNING *',
-          [task, frequency, day_of_month]
+          'INSERT INTO todos (task, frequency, day_of_month, creator_id, home_id) values ($1, $2, $3, $4, $5) RETURNING *',
+          [task, frequency, day_of_month, , creator_id, home_id]
         );
         await client.release();
         return todo;
@@ -49,7 +53,7 @@ class ToDo{
     try{
       const client = await pool.connect();
       const { rows: todo } = await client.query(
-        'SELECT * FROM todo'
+        'SELECT * FROM todos'
       );
       await client.release();
       return todo;
@@ -63,7 +67,7 @@ class ToDo{
     try{
       const client = await pool.connect();
       const { rows: todo } = await client.query(
-        'SELECT * FROM todo T where T.id = $1',
+        'SELECT * FROM todos T where T.id = $1',
         [todo_id]
       );
       await client.release();
@@ -74,7 +78,7 @@ class ToDo{
     return null;
   }
 
-  static async update(data: IToDo, todo_id : string){
+  static async update(data: IToDos, todo_id: string, creator_id: string){
     try{
       const client = await pool.connect();
       const {
@@ -85,22 +89,22 @@ class ToDo{
       } = data;
       if(frequency==='daily'){
         const { rows: todo } = await client.query(
-          'UPDATE todo T SET task = $1, frequency = $2 WHERE T.id = $3',
-          [task, frequency, todo_id]
+          'UPDATE todos T SET task = $1, frequency = $2 WHERE T.id = $3 AND T.creator_id = $4',
+          [task, frequency, todo_id, creator_id]
         );
         await client.release();
         return todo;
       }else if(frequency==='weekly'){
         const { rows: todo } = await client.query(
-          'UPDATE todo T SET task = $1, frequency = $2, day_of_week = $3 WHERE T.id = $4',
-          [task, frequency, day_of_week, todo_id]
+          'UPDATE todos T SET task = $1, frequency = $2, day_of_week = $3 WHERE T.id = $4 AND T.creator_id = $5',
+          [task, frequency, day_of_week, todo_id, creator_id]
         );
         await client.release();
         return todo;
       }else if(frequency==='monthly'){
         const { rows: todo } = await client.query(
-          'UPDATE todo T SET task = $1, frequency = $2, day_of_month = $3 WHERE T.id = $4',
-          [task, frequency, day_of_month, todo_id]
+          'UPDATE todos T SET task = $1, frequency = $2, day_of_month = $3 WHERE T.id = $4 AND T.creator_id = $5',
+          [task, frequency, day_of_month, todo_id, creator_id]
         );
         await client.release();
         return todo;
@@ -111,12 +115,12 @@ class ToDo{
     return null;
   }
 
-  static async findByIdAndDelete(todo_id : string){
+  static async findByIdAndDelete(todo_id: string, creator_id: string){
     try{
       const client = await pool.connect();
       const { rows: todo } = await client.query(
-        'DELETE FROM todo T where T.id = $1',
-        [todo_id]
+        'DELETE FROM todos T where T.id = $1 AND T.creator_id = $2',
+        [todo_id, creator_id]
       );
       await client.release();
       return todo;
@@ -127,4 +131,4 @@ class ToDo{
   }
 }
 
-export default ToDo;
+export default ToDos;

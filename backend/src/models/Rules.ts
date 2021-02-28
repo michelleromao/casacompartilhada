@@ -1,22 +1,26 @@
 import pool from "../database/index";
 
-interface IRule{
-  description: string
+interface IRules{
+  description: string;
+  creator_id: string;
+  home_id: string;
 }
 
-class Rule{
-  static async create(data: IRule){
+class Rules{
+  static async create(data: IRules){
     try{
       const client = await pool.connect();
       const {
-        description
+        description,
+        creator_id,
+        home_id,
       } = data;
-      const { rows: rule } = await client.query(
-        'INSERT INTO rule (description) values ($1) RETURNING *',
-        [description]
+      const { rows: rules } = await client.query(
+        'INSERT INTO rules (description, creator_id, home_id) values ($1, $2, $3) RETURNING *',
+        [description, creator_id, home_id]
       );
       await client.release();
-      return rule;
+      return rules;
     }catch(err){
       console.log('Cant create a rule');
     }
@@ -27,7 +31,7 @@ class Rule{
     try{
       const client = await pool.connect();
       const { rows: rules } = await client.query(
-        'SELECT * FROM rule'
+        'SELECT * FROM rules'
       );
       await client.release();
       return rules;
@@ -41,9 +45,24 @@ class Rule{
   static async findById(rule_id: string){
     try{
       const client = await pool.connect();
-      const { rows: rule } = await client.query(
-        'SELECT * FROM rule R where R.id = $1',
+      const { rows: rules } = await client.query(
+        'SELECT * FROM rules R where R.id = $1',
         [rule_id]
+      );
+      await client.release();
+      return rules;
+    }catch(err){
+      console.log('Cant find a rule');
+    }
+    return null;
+  }
+
+  static async findByHomeId(home_id: string){
+    try{
+      const client = await pool.connect();
+      const { rows: rule } = await client.query(
+        'SELECT * FROM rules R where R.home_id = $1',
+        [home_id]
       );
       await client.release();
       return rule;
@@ -53,15 +72,15 @@ class Rule{
     return null;
   }
 
-  static async update(data: IRule, rule_id: string){
+  static async update(data: IRules, rule_id: string, creator_id: string){
     try{
       const client = await pool.connect();
       const {
         description
       } = data;
       const { rows: rule } = await client.query(
-        'UPDATE rule R SET description = $1 WHERE R.id = $2',
-        [description, rule_id]
+        'UPDATE rules R SET description = $1 WHERE R.id = $2 AND R.creator_id = $3',
+        [description, rule_id, creator_id]
       );
       await client.release();
       return rule;
@@ -71,12 +90,12 @@ class Rule{
     return null;
   }
 
-  static async findByIdAndDelete(rule_id: string){
+  static async findByIdAndDelete(rule_id: string, creator_id: string){
     try{
       const client = await pool.connect();
       const { rows: rule } = await client.query(
-        'DELETE FROM rule R where R.id = $1',
-        [rule_id]
+        'DELETE FROM rules R where R.id = $1 AND R.creator_id = $2',
+        [rule_id, creator_id]
       );
       await client.release();
       return rule;
@@ -87,4 +106,4 @@ class Rule{
   }
 }
 
-export default Rule;
+export default Rules;

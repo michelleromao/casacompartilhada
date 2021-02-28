@@ -1,13 +1,14 @@
 import pool from "../database/index";
 
-interface IUser {
+interface IUsers {
   username: string;
   email: string;
   password: string;
+  home_id: string;
 }
 
-class User{
-  static async create(data: IUser){
+class Users{
+  static async create(data: IUsers){
     try{
       const client = await pool.connect();
       const {
@@ -16,7 +17,7 @@ class User{
         password
       } = data;
       const { rows: user } = await client.query(
-        'INSERT INTO user (username, email, password) values ($1, $2, $3) RETURNING *',
+        'INSERT INTO users (username, email, password) values ($1, $2, $3) RETURNING *',
         [username, email, password]
       );
       await client.release();
@@ -31,7 +32,7 @@ class User{
     try{
       const client = await pool.connect();
       const { rows: user } = await client.query(
-        'SELECT * FROM user'
+        'SELECT * FROM users'
       );
       await client.release();
       return user;
@@ -45,7 +46,7 @@ class User{
     try{
       const client = await pool.connect();
       const { rows: user } = await client.query(
-        'SELECT * FROM user U where U.id = $1',
+        'SELECT * FROM users U where U.id = $1',
         [user_id]
       );
       await client.release();
@@ -56,17 +57,33 @@ class User{
     return null;
   }
 
-  static async update(data: IUser, user_id: string){
+  static async findByHomeId(home_id: string){
+    try{
+      const client = await pool.connect();
+      const { rows: user } = await client.query(
+        'SELECT * FROM users U where U.home_id = $1',
+        [home_id]
+      );
+      await client.release();
+      return user;
+    }catch(err){
+      console.log('Cant find an user');
+    }
+    return null;
+  }
+
+  static async update(data: IUsers, user_id: string){
     try{
       const client = await pool.connect();
       const {
         username,
         email,
-        password
+        password,
+        home_id
       } = data;
       const { rows: user } = await client.query(
-        'UPDATE user U SET name = $1, email = $2, password = $3 WHERE U.id = $4',
-        [username, email, password, user_id]
+        'UPDATE users U SET username = $1, email = $2, password = $3, home_id = $4 WHERE U.id = $5',
+        [username, email, password, home_id, user_id]
       );
       await client.release();
       return user;
@@ -80,7 +97,7 @@ class User{
     try{
       const client = await pool.connect();
       const { rows: user } = await client.query(
-        'DELETE FROM user U where U.id = $1',
+        'DELETE FROM users U where U.id = $1',
         [user_id]
       );
       await client.release();
@@ -92,4 +109,4 @@ class User{
   }
 }
 
-export default User;
+export default Users;
