@@ -28,7 +28,6 @@ class Payments{
     }catch(err){
       console.log('Cant create a payment');
     }
-    return null;
   }
 
   static async findAll(){
@@ -42,7 +41,6 @@ class Payments{
     }catch(err){
       console.log('Cant find all payments');
     }
-    return null;
   }
 
   static async findById(pay_id: string){
@@ -57,7 +55,6 @@ class Payments{
     }catch(err){
       console.log('Cant find a payment');
     }
-    return null;
   }
 
   static async findByPayerId(payer_id: string){
@@ -72,7 +69,6 @@ class Payments{
     }catch(err){
       console.log('Cant find a payment');
     }
-    return null;
   }
 
   static async findByBillId(bill_id: string){
@@ -87,7 +83,6 @@ class Payments{
     }catch(err){
       console.log('Cant find a payment');
     }
-    return null;
   }
 }
 

@@ -2,8 +2,8 @@ import pool from "../database/index";
 
 interface IRules{
   description: string;
-  creator_id: string;
-  home_id: string;
+  creator_id?: string;
+  home_id?: string;
 }
 
 class Rules{
@@ -24,7 +24,6 @@ class Rules{
     }catch(err){
       console.log('Cant create a rule');
     }
-    return null;
   }
 
   static async findAll(){
@@ -39,7 +38,6 @@ class Rules{
     }catch(err){
       console.log('Cant find all rules');
     }
-    return null;
   }
 
   static async findById(rule_id: string){
@@ -54,7 +52,6 @@ class Rules{
     }catch(err){
       console.log('Cant find a rule');
     }
-    return null;
   }
 
   static async findByHomeId(home_id: string){
@@ -69,7 +66,6 @@ class Rules{
     }catch(err){
       console.log('Cant find a rule');
     }
-    return null;
   }
 
   static async update(data: IRules, rule_id: string, creator_id: string){
@@ -79,7 +75,7 @@ class Rules{
         description
       } = data;
       const { rows: rule } = await client.query(
-        'UPDATE rules R SET description = $1 WHERE R.id = $2 AND R.creator_id = $3',
+        'UPDATE rules R SET description = $1 WHERE R.id = $2 AND R.creator_id = $3 RETURNING *',
         [description, rule_id, creator_id]
       );
       await client.release();
@@ -87,7 +83,6 @@ class Rules{
     }catch(err){
       console.log('Cant update a rule');
     }
-    return null;
   }
 
   static async findByIdAndDelete(rule_id: string, creator_id: string){
@@ -102,7 +97,6 @@ class Rules{
     }catch(err){
       console.log('Cant delete a rule');
     }
-    return null;
   }
 }
 

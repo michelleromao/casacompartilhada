@@ -13,7 +13,7 @@ export = {
       const { home_id } = request.query;
       const find = await Users.findByHomeId(home_id);
       const user = find?.map((user: ShowUserDTO) => {
-        return ({username: user.username, email: user.email});
+        return ({id: user.id, username: user.username, email: user.email});
       })
       return response.json(user);
       /*else{
@@ -36,7 +36,7 @@ export = {
         return({id: user.id, username: user.username, email: user.email, home: user.home_id});
       })
       if(user){
-        response.json(user[0]);
+        return response.json(user[0]);
       }
     }catch(err){
       console.log(err);
@@ -84,7 +84,7 @@ export = {
             return({username: user.username, email: user.email})
           })
           if(user){
-            response.json(user[0]);
+            return response.json(user[0]);
           }
         }
       }
@@ -96,8 +96,8 @@ export = {
   async delete(request: Request, response: Response){
     try{
       const { id } = request.params;
-      const deletedUser = await Users.findByIdAndDelete(id);
-      response.json(deletedUser);
+      await Users.findByIdAndDelete(id);
+      return response.json({message: 'User deleted'});
     }catch(err){
       console.log(err);
     }

@@ -55,8 +55,8 @@ export = {
         home_id
       } : DeleteHomeDTO = request.body;
       const { id } = request.params;
-      const home =  await Homes.findByIdAndDelete(home_id, id);
-      response.json(home);
+      await Homes.findByIdAndDelete(home_id, id);
+      return response.json({message: 'Home deleted'});
     }catch(err){
       console.log(err);
     }

@@ -35,7 +35,6 @@ class Home{
     }catch(err){
       console.log('Cant find all homes');
     }
-    return null;
   }
 
   static async findById(home_id: string){
@@ -50,7 +49,6 @@ class Home{
     }catch(err){
       console.log('Cant find a home');
     }
-    return null;
   }
 
   static async update(data: IHome, creator_id: string){
@@ -82,7 +80,6 @@ class Home{
     }catch(err){
       console.log('Cant delete a home');
     }
-    return null;
   }
 }
 

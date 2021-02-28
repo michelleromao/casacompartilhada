@@ -46,7 +46,6 @@ class ToDos{
     }catch(err){
       console.log('Cant create an item to To Do list');
     }
-    return null;
   }
 
   static async findAll(){
@@ -60,7 +59,6 @@ class ToDos{
     }catch(err){
       console.log('Cant find all items of To Do List');
     }
-    return null;
   }
 
   static async findById(todo_id : string){
@@ -75,7 +73,6 @@ class ToDos{
     }catch(err){
       console.log('Cant find an item of To Do List');
     }
-    return null;
   }
 
   static async update(data: IToDos, todo_id: string, creator_id: string){
@@ -89,21 +86,21 @@ class ToDos{
       } = data;
       if(frequency==='daily'){
         const { rows: todo } = await client.query(
-          'UPDATE todos T SET task = $1, frequency = $2 WHERE T.id = $3 AND T.creator_id = $4',
+          'UPDATE todos T SET task = $1, frequency = $2 WHERE T.id = $3 AND T.creator_id = $4 RETURNING *',
           [task, frequency, todo_id, creator_id]
         );
         await client.release();
         return todo;
       }else if(frequency==='weekly'){
         const { rows: todo } = await client.query(
-          'UPDATE todos T SET task = $1, frequency = $2, day_of_week = $3 WHERE T.id = $4 AND T.creator_id = $5',
+          'UPDATE todos T SET task = $1, frequency = $2, day_of_week = $3 WHERE T.id = $4 AND T.creator_id = $5 RETURNING *',
           [task, frequency, day_of_week, todo_id, creator_id]
         );
         await client.release();
         return todo;
       }else if(frequency==='monthly'){
         const { rows: todo } = await client.query(
-          'UPDATE todos T SET task = $1, frequency = $2, day_of_month = $3 WHERE T.id = $4 AND T.creator_id = $5',
+          'UPDATE todos T SET task = $1, frequency = $2, day_of_month = $3 WHERE T.id = $4 AND T.creator_id = $5 RETURNING *',
           [task, frequency, day_of_month, todo_id, creator_id]
         );
         await client.release();
@@ -112,7 +109,6 @@ class ToDos{
     }catch(err){
       console.log('Cant update an item of To Do List');
     }
-    return null;
   }
 
   static async findByIdAndDelete(todo_id: string, creator_id: string){
@@ -127,7 +123,6 @@ class ToDos{
     }catch(err){
       console.log('Cant delete an item of To Do List');
     }
-    return null;
   }
 }
 

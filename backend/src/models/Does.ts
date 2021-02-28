@@ -22,7 +22,6 @@ class Does{
     }catch(err){
       console.log('Cant create a does');
     }
-    return null;
   }
 
   static async findAll(){
@@ -36,7 +35,6 @@ class Does{
     }catch(err){
       console.log('Cant find all does');
     }
-    return null;
   }
 
   static async findById(does_id: string){
@@ -51,7 +49,6 @@ class Does{
     }catch(err){
       console.log('Cant find a does');
     }
-    return null;
   }
 
   static async findByDoerId(doer_id: string){
@@ -66,7 +63,6 @@ class Does{
     }catch(err){
       console.log('Cant find a does');
     }
-    return null;
   }
 
   static async findByToDoId(todo_id: string){
@@ -81,7 +77,6 @@ class Does{
     }catch(err){
       console.log('Cant find a does');
     }
-    return null;
   }
 }
 

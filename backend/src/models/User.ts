@@ -26,7 +26,6 @@ class Users{
     }catch(err){
       console.log('Cant create an user');
     }
-    return null;
   }
 
   static async findAll(){
@@ -54,7 +53,6 @@ class Users{
     }catch(err){
       console.log('Cant find an user');
     }
-    return null;
   }
 
   static async findByHomeId(home_id: string){
@@ -69,7 +67,6 @@ class Users{
     }catch(err){
       console.log('Cant find an user');
     }
-    return null;
   }
 
   static async update(data: IUsers, user_id: string){

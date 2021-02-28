@@ -2,10 +2,10 @@ import pool from "../database/index";
 
 interface IPurchaseItems {
   item: string;
-  status: boolean;
-  creator_id: string;
-  home_id: string;
-  buyer_id: string;
+  status?: boolean;
+  creator_id?: string;
+  home_id?: string;
+  buyer_id?: string;
 }
 
 class PurchaseItems{
@@ -40,7 +40,6 @@ class PurchaseItems{
     }catch(err){
       console.log('Cant find all purchase items');
     }
-    return null;
   }
 
   static async findById(purchase_item_id: string){
@@ -55,7 +54,6 @@ class PurchaseItems{
     }catch(err){
       console.log('Cant find a purchase item');
     }
-    return null;
   }
 
   static async findByHomeId(home_id: string){
@@ -70,22 +68,20 @@ class PurchaseItems{
     }catch(err){
       console.log('Cant find a purchase item');
     }
-    return null;
   }
 
-  static async findByStatus(status: boolean){
+  static async findByStatus(status: string, home_id: string){
     try{
       const client = await pool.connect();
       const { rows: purchaseitem } = await client.query(
-        'SELECT * FROM purchase_items P where P.status = $1',
-        [status]
+        'SELECT * FROM purchase_items P where P.status = $1 AND P.home_id = $2',
+        [status, home_id]
       );
       await client.release();
       return purchaseitem;
     }catch(err){
       console.log('Cant find a purchase item');
     }
-    return null;
   }
 
   static async update(data: IPurchaseItems, purchase_item_id: string, creator_id: string){
@@ -96,7 +92,7 @@ class PurchaseItems{
         status
       } = data;
       const { rows: purchaseitem } = await client.query(
-        'UPDATE purchase_items P SET item = $1, status = $2 WHERE P.id = $3 AND P.creator_id = $4',
+        'UPDATE purchase_items P SET item = $1, status = $2 WHERE P.id = $3 AND P.creator_id = $4 RETURNING *',
         [item, status, purchase_item_id, creator_id]
       );
       await client.release();
@@ -104,7 +100,6 @@ class PurchaseItems{
     }catch(err){
       console.log('Cant update a purchase item');
     }
-    return null;
   }
 
   static async findByIdAndDelete(purchase_item_id: string, creator_id: string){
@@ -119,7 +114,6 @@ class PurchaseItems{
     }catch(err){
       console.log('Cant delete a purchase item');
     }
-    return null;
   }
 }
 

@@ -3,12 +3,12 @@ import pool from "../database/index";
 interface IBills {
   name: string;
   responsible_id: string;
-  due: Date;
+  due: string;
   value: number;
   home: boolean;
-  status: boolean;
-  creator_id: string;
-  home_id: string;
+  status?: boolean;
+  creator_id?: string;
+  home_id?: string;
 }
 
 class Bills{
@@ -33,7 +33,6 @@ class Bills{
     }catch(err){
       console.log('Cant create a bill');
     }
-    return null;
   }
 
   static async findAll(){
@@ -48,7 +47,6 @@ class Bills{
     }catch(err){
       console.log('Cant find all bills');
     }
-    return null;
   }
 
   static async findById(bill_id: string){
@@ -63,7 +61,6 @@ class Bills{
     }catch(err){
       console.log('Cant find a bill');
     }
-    return null;
   }
 
   static async findByHomeId(home_id: string){
@@ -78,10 +75,23 @@ class Bills{
     }catch(err){
       console.log('Cant find a bill');
     }
-    return null;
   }
 
-  static async update(data: IBills, bill_id: string, creator_id: string){
+  static async findByStatus(status: string, home_id: string){
+    try{
+      const client = await pool.connect();
+      const { rows: bills } = await client.query(
+        'SELECT * FROM bills B where B.status = $1 AND home_id = $2',
+        [status, home_id]
+      );
+      await client.release();
+      return bills;
+    }catch(err){
+      console.log('Cant find the bills');
+    }
+  }
+
+  static async update(data: IBills, bill_id: string, creator_id: string, home_id: string){
     try{
       const client = await pool.connect();
       const {
@@ -90,18 +100,16 @@ class Bills{
         due,
         value,
         home,
-        status,
       } = data;
       const { rows: bills } = await client.query(
-        'UPDATE bills B SET name = $1, responsible_id = $2, due = $3, value = $4, home = $5, status = $6 WHERE B.id = $7 AND b.creator_id = $8',
-        [name, responsible_id, due, value, home, status, bill_id, creator_id]
+        'UPDATE bills B SET name = $1, responsible_id = $2, due = $3, value = $4, home = $5 WHERE B.id = $6 AND B.creator_id = $7 AND B.home_id = $8 RETURNING *',
+        [name, responsible_id, due, value, home, bill_id, creator_id, home_id]
       );
       await client.release();
       return bills;
     }catch(err){
       console.log('Cant update a bill');
     }
-    return null;
   }
 
   static async findByIdAndDelete(bill_id: string, creator_id: string){
@@ -116,7 +124,6 @@ class Bills{
     }catch(err){
       console.log('Cant delete a bill');
     }
-    return null;
   }
 }
 
