@@ -1,25 +1,12 @@
 import {Router} from 'express';
+import BillsController from '../controllers/BillsController'
 
 const billRoutes = Router();
 
-billRoutes.get("/", (request, response) => {
-  return response.json({message: "GET Bill"})
-});
-
-billRoutes.get("/:id", (request, response) => {
-  return response.json({message: "GET Bill :id"})
-});
-
-billRoutes.post("/", (request, response) => {
-  return response.json({message: "POST Bill"})
-});
-
-billRoutes.put("/:id", (request, response) => {
-  return response.json({message: "PUT Bill :id"})
-});
-
-billRoutes.delete("/:id", (request, response) => {
-  return response.json({message: "DELETE Bill :id"})
-});
+billRoutes.get("/", BillsController.index);
+billRoutes.get("/:id", BillsController.findOne);
+billRoutes.post("/",  BillsController.store);
+billRoutes.put("/:id",  BillsController.update);
+billRoutes.delete("/:id", BillsController.delete);
 
 export default billRoutes;

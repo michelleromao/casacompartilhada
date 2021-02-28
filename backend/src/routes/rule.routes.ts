@@ -1,25 +1,12 @@
 import {Router} from 'express';
+import RulesController from '../controllers/RulesController'
 
 const ruleRoutes = Router();
 
-ruleRoutes.get("/", (request, response) => {
-  return response.json({message: "GET Rule"})
-});
-
-ruleRoutes.get("/:id", (request, response) => {
-  return response.json({message: "GET Rule :id"})
-});
-
-ruleRoutes.post("/", (request, response) => {
-  return response.json({message: "POST Rule"})
-});
-
-ruleRoutes.put("/:id", (request, response) => {
-  return response.json({message: "PUT Rule :id"})
-});
-
-ruleRoutes.delete("/:id", (request, response) => {
-  return response.json({message: "DELETE Rule :id"})
-});
+ruleRoutes.get("/", RulesController.index);
+ruleRoutes.get("/:id", RulesController.findOne);
+ruleRoutes.post("/",  RulesController.store);
+ruleRoutes.put("/:id",  RulesController.update);
+ruleRoutes.delete("/:id", RulesController.delete);
 
 export default ruleRoutes;

@@ -1,18 +1,12 @@
 import {Router} from 'express';
+import PaymentsController from '../controllers/PaymentsController'
 
 const payRoutes = Router();
 
-payRoutes.get("/", (request, response) => {
-  return response.json({message: "GET Pay"})
-});
-
-payRoutes.get("/:id", (request, response) => {
-  return response.json({message: "GET Pay :id"})
-});
-
-payRoutes.post("/", (request, response) => {
-  return response.json({message: "POST Pay"})
-});
-
+payRoutes.get("/", PaymentsController.index);
+payRoutes.get("/:id", PaymentsController.findOne);
+payRoutes.post("/",  PaymentsController.store);
+payRoutes.put("/:id",  PaymentsController.update);
+payRoutes.delete("/:id", PaymentsController.delete);
 
 export default payRoutes;

@@ -1,25 +1,12 @@
 import {Router} from 'express';
+import PurchaseItemsController from '../controllers/PurchaseItemsController'
 
 const purchaseItemRoutes = Router();
 
-purchaseItemRoutes.get("/", (request, response) => {
-  return response.json({message: "GET Purchase Item"})
-});
-
-purchaseItemRoutes.get("/:id", (request, response) => {
-  return response.json({message: "GET Purchase Item :id"})
-});
-
-purchaseItemRoutes.post("/", (request, response) => {
-  return response.json({message: "POST Purchase Item"})
-});
-
-purchaseItemRoutes.put("/:id", (request, response) => {
-  return response.json({message: "PUT Purchase Item :id"})
-});
-
-purchaseItemRoutes.delete("/:id", (request, response) => {
-  return response.json({message: "DELETE Purchase Item :id"})
-});
+purchaseItemRoutes.get("/", PurchaseItemsController.index);
+purchaseItemRoutes.get("/:id", PurchaseItemsController.findOne);
+purchaseItemRoutes.post("/",  PurchaseItemsController.store);
+purchaseItemRoutes.put("/:id",  PurchaseItemsController.update);
+purchaseItemRoutes.delete("/:id", PurchaseItemsController.delete);
 
 export default purchaseItemRoutes;

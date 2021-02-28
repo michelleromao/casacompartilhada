@@ -1,18 +1,12 @@
 import {Router} from 'express';
+import DoesController from '../controllers/DoesController'
 
 const doesRoutes = Router();
 
-doesRoutes.get("/", (request, response) => {
-  return response.json({message: "GET Does"})
-});
-
-doesRoutes.get("/:id", (request, response) => {
-  return response.json({message: "GET Does :id"})
-});
-
-doesRoutes.post("/", (request, response) => {
-  return response.json({message: "POST Does"})
-});
-
+doesRoutes.get("/", DoesController.index);
+doesRoutes.get("/:id", DoesController.findOne);
+doesRoutes.post("/",  DoesController.store);
+doesRoutes.put("/:id",  DoesController.update);
+doesRoutes.delete("/:id", DoesController.delete);
 
 export default doesRoutes;
