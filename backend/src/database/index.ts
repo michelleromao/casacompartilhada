@@ -42,9 +42,4 @@ pool.connect((err, client, done) =>{
   })
 })
 
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(res.rows)
-  pool.end()
-})
-
 export default pool;

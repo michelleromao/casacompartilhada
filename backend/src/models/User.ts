@@ -1,10 +1,11 @@
 import pool from "../database/index";
+import ShowUserDTO from "../interfaces/ShowUserDTO";
 
 interface IUsers {
   username: string;
   email: string;
   password: string;
-  home_id: string;
+  home_id?: string;
 }
 
 class Users{
@@ -39,7 +40,6 @@ class Users{
     }catch(err){
       console.log('Cant find all users');
     }
-    return null;
   }
 
   static async findById(user_id: string){
@@ -82,7 +82,7 @@ class Users{
         home_id
       } = data;
       const { rows: user } = await client.query(
-        'UPDATE users U SET username = $1, email = $2, password = $3, home_id = $4 WHERE U.id = $5',
+        'UPDATE users U SET username = $1, email = $2, password = $3, home_id = $4 WHERE U.id = $5 RETURNING *',
         [username, email, password, home_id, user_id]
       );
       await client.release();
@@ -90,7 +90,6 @@ class Users{
     }catch(err){
       console.log('Cant update an user');
     }
-    return null;
   }
 
   static async findByIdAndDelete(user_id: string){
@@ -105,7 +104,6 @@ class Users{
     }catch(err){
       console.log('Cant delete an user');
     }
-    return null;
   }
 }
 
