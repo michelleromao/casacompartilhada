@@ -1,0 +1,120 @@
+/* Default */
+
+body{
+    margin: 0;
+    background-color: #FFF7F7;
+    height: 100vh;
+    width: 100vw;
+    font-family: sans-serif;
+}
+
+.w-full{
+    width: 100%;
+}
+
+.btn{
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    border: #6566BE solid 1px;
+    padding: 8px 24px;
+    background-color: #6566BE;
+}
+
+.btn-outline{
+    color: #6566BE;
+    border-radius: 10px;
+    border: #6566BE solid 1px;
+    padding: 8px 24px;
+    background-color: transparent;
+}
+
+.btn-bar{
+    display: flex;
+}
+
+.btn-flex{
+    flex: auto;
+    margin: 0 10px;
+}
+
+.btn-clear{
+    border: none;
+    background: none;
+    font-size: 150%;
+    color: #6566BE;
+}
+
+
+/* Navbar */
+
+.navbar {
+    height: 5vh;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+}
+
+.navbar > .logo {
+    height: 100%;
+}
+
+.navbar-btn{
+    position: fixed;
+    right: 24px;
+}
+
+/* Sidebar */
+
+.sidebar {
+    width: 15vw;
+    list-style: none;
+    height: 95vh;
+    display: inline-flex;
+    flex-flow: column;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar > a{
+    text-decoration: none;
+    background-color: #FA8D85;
+    color: white;
+    text-align: center;
+    padding: 20px 0 20px 0;
+    border-radius: 0 10px 10px 0;
+    font-family: sans-serif;
+    width: 25%;
+}
+
+a > label {
+    display: none;
+}
+
+.sidebar > .active{
+    background-color: #6566BE !important;
+    font-weight: bold;
+    width: 100%;
+}
+
+.active > label {
+    display: block;
+}
+
+/* SideAndBody */
+
+.SideAndBody {
+    display: flex;
+}
+
+/* Body */
+
+.body {
+    display: inline-flex;
+    height: 95vh;
+    width: 85vw;
+    margin: 0;
+    padding: 24px;
+}

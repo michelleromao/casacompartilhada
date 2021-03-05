@@ -1,29 +1,36 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Navbar from "./components/common/Navbar";
-import Login from "./components/login/Login";
-import './style/style.css';
+import React from 'react'
+import { BrowserRouter, Route } from "react-router-dom";
+import Home from './components/Home';
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import Todo from './components/todo/Todo';
+import './style.css'
 
 function App() {
   return (
-    <div className="body bg-BegeClaro">
-
     <BrowserRouter>
 
       <Navbar></Navbar>
 
-        
-      <Switch>
+      <div className="SideAndBody">
 
-        <Route path="/">
-          <Login></Login>
-        </Route>
+        <Sidebar></Sidebar>
 
-      </Switch>
+        <div className="body">
 
+          <Route path="/regras" exact>
+            <Home></Home>
+          </Route>
+
+          <Route path="/todo">
+            <Todo></Todo>
+          </Route>
+
+        </div>
+
+      </div>
 
     </BrowserRouter>
-    
-    </div>
   );
 }
 
