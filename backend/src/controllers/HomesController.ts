@@ -51,11 +51,9 @@ export = {
 
   async delete(request: Request, response: Response){
     try{
-      const {
-        home_id
-      } : DeleteHomeDTO = request.body;
       const { id } = request.params;
-      await Homes.findByIdAndDelete(home_id, id);
+      const { creator_id } = request.body;
+      await Homes.findByIdAndDelete(id, creator_id);
       return response.json({message: 'Home deleted'});
     }catch(err){
       console.log(err);

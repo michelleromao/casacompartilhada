@@ -47,8 +47,8 @@ export = {
   async update(request: Request, response: Response){
     try{
       const { id } = request.params;
-      const { description, cretor_id } = request.body;
-      const rule = await Rules.update({description},id,cretor_id);
+      const { description, creator_id } = request.body;
+      const rule = await Rules.update({description},id,creator_id);
       return response.json(rule);
     }catch(err){
       console.log(err);

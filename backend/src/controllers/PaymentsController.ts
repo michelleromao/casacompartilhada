@@ -23,8 +23,7 @@ export = {
 
   async store(request: Request, response: Response){
     try{
-      const {bill_id} = request.params;
-      const {payer_id} = request.body;
+      const {bill_id, payer_id} = request.body;
       const payment = await Payments.create({payer_id, bill_id});
       return response.json(payment);
     }catch(err){
