@@ -16,13 +16,6 @@ export = {
         return ({id: user.id, username: user.username, email: user.email});
       })
       return response.json(user);
-      /*else{
-        const find = await Users.findAll();
-        const users = find?.map((user: ShowUserDTO) => {
-          return ({username: user.username, email: user.email});
-        })
-        return response.json(users);
-      }*/
     }catch(err){
       console.log(err);
     }

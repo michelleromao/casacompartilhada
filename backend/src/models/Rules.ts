@@ -1,4 +1,5 @@
 import pool from "../database/index";
+import { format } from 'date-fns-tz';
 
 interface IRules{
   description: string;
@@ -74,9 +75,11 @@ class Rules{
       const {
         description
       } = data;
+
+      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
       const { rows: rule } = await client.query(
-        'UPDATE rules R SET description = $1 WHERE R.id = $2 AND R.creator_id = $3 RETURNING *',
-        [description, rule_id, creator_id]
+        'UPDATE rules R SET description = $1, updated_at = $2 WHERE R.id = $3 AND R.creator_id = $4 RETURNING *',
+        [description, now, rule_id, creator_id]
       );
       await client.release();
       return rule;

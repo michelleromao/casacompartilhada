@@ -6,23 +6,42 @@ import CreateBillDTO from "../interfaces/CreateBillDTO";
 export = {
   async index(request: Request, response: Response){
     try{
-      const { status } = request.query;
+      const { status, type } = request.query;
       const { home_id } = request.body;
-      const find = await Bills.findByStatus(status,home_id);
-      const bills = find?.map((bill: IndexBillDTO) => {
-        return({
-          id: bill.id,
-          name:bill.name,
-          responsible_id: bill.responsible_id,
-          due: bill.due,
-          value: bill.value,
-          home: bill.home,
-          status: bill.status,
-          creator_id: bill.creator_id,
+      if(status){
+        const find = await Bills.findByStatus(status,home_id);
+        const bills = find?.map((bill: IndexBillDTO) => {
+          return({
+            id: bill.id,
+            name:bill.name,
+            responsible_id: bill.responsible_id,
+            due: bill.due,
+            value: bill.value,
+            home: bill.home,
+            status: bill.status,
+            creator_id: bill.creator_id,
+          });
         });
-      });
-      if(bills){
-        return response.json(bills);
+        if(bills){
+          return response.json(bills);
+        }
+      }else if(type){
+        const find = await Bills.findByType(type,home_id);
+        const bills = find?.map((bill: IndexBillDTO) => {
+          return({
+            id: bill.id,
+            name:bill.name,
+            responsible_id: bill.responsible_id,
+            due: bill.due,
+            value: bill.value,
+            home: bill.home,
+            status: bill.status,
+            creator_id: bill.creator_id,
+          });
+        })
+        if(bills){
+          return response.json(bills);
+        }
       }
     }catch(err){
       console.log(err);

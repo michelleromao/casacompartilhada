@@ -1,4 +1,5 @@
 import pool from "../database/index";
+import { format } from 'date-fns-tz';
 
 interface IPurchaseItems {
   item: string;
@@ -84,6 +85,21 @@ class PurchaseItems{
     }
   }
 
+  static async updateBuyer(id_buyer:string, purchase_item_id: string){
+    try{
+      const client = await pool.connect();
+      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
+      const {rows: purchaseitem} = await client.query(
+        'UPDATE purchase_item P SET buyer_id = $1, updated_at = $2 WHERE P.id = $3 RETURNING *',
+        [id_buyer, now, purchase_item_id]
+      );
+      await client.release();
+      return purchaseitem;
+    }catch(err){
+      console.log('Cant buy the purchase item');
+    }
+  }
+
   static async update(data: IPurchaseItems, purchase_item_id: string, creator_id: string){
     try{
       const client = await pool.connect();
@@ -91,9 +107,11 @@ class PurchaseItems{
         item,
         status
       } = data;
+
+      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
       const { rows: purchaseitem } = await client.query(
-        'UPDATE purchase_items P SET item = $1, status = $2 WHERE P.id = $3 AND P.creator_id = $4 RETURNING *',
-        [item, status, purchase_item_id, creator_id]
+        'UPDATE purchase_items P SET item = $1, status = $2, updated_at = $3 WHERE P.id = $4 AND P.creator_id = $5 RETURNING *',
+        [item, status, now, purchase_item_id, creator_id]
       );
       await client.release();
       return purchaseitem;

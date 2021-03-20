@@ -1,4 +1,5 @@
 import pool from "../database/index";
+import { format } from 'date-fns-tz';
 
 interface IBills {
   name: string;
@@ -91,6 +92,20 @@ class Bills{
     }
   }
 
+  static async findByType(type: string, home_id: string){
+    try{
+      const client = await pool.connect();
+      const { rows: bills } = await client.query(
+        'SELECT * FROM bills B where B.home = $1 AND home_id = $2',
+        [type, home_id]
+      );
+      await client.release();
+      return bills;
+    }catch(err){
+      console.log('Cant find the bills');
+    }
+  }
+
   static async update(data: IBills, bill_id: string, creator_id: string, home_id: string){
     try{
       const client = await pool.connect();
@@ -101,9 +116,10 @@ class Bills{
         value,
         home,
       } = data;
+      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
       const { rows: bills } = await client.query(
-        'UPDATE bills B SET name = $1, responsible_id = $2, due = $3, value = $4, home = $5 WHERE B.id = $6 AND B.creator_id = $7 AND B.home_id = $8 RETURNING *',
-        [name, responsible_id, due, value, home, bill_id, creator_id, home_id]
+        'UPDATE bills B SET name = $1, responsible_id = $2, due = $3, value = $4, home = $5, updated_at = $6 WHERE B.id = $7 AND B.creator_id = $8 AND B.home_id = $9 RETURNING *',
+        [name, responsible_id, due, value, home, now, bill_id, creator_id, home_id]
       );
       await client.release();
       return bills;

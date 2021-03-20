@@ -56,9 +56,15 @@ export = {
   async update(request: Request, response: Response){
     try{
       const { id } = request.params;
-      const { item, status, creator_id } = request.body;
-      const purchase_item = await PurchaseItems.update({item, status},id,creator_id);
-      return response.json(purchase_item);
+      const { buyer_id } = request.query;
+      if(buyer_id){
+        const purchase_item = await PurchaseItems.updateBuyer(buyer_id, id);
+        return response.json(purchase_item);
+      }else{
+        const { item, status, creator_id } = request.body;
+        const purchase_item = await PurchaseItems.update({item, status},id,creator_id);
+        return response.json(purchase_item);
+      }
     }catch(err){
       console.log(err);
     }

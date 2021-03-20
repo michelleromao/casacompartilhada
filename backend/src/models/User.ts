@@ -1,6 +1,6 @@
 import pool from "../database/index";
 import ShowUserDTO from "../interfaces/ShowUserDTO";
-
+import { format } from 'date-fns-tz';
 interface IUsers {
   username: string;
   email: string;
@@ -78,14 +78,15 @@ class Users{
         password,
         home_id
       } = data;
+      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
       const { rows: user } = await client.query(
-        'UPDATE users U SET username = $1, email = $2, password = $3, home_id = $4 WHERE U.id = $5 RETURNING *',
-        [username, email, password, home_id, user_id]
+        'UPDATE users U SET username = $1, email = $2, password = $3, home_id = $4, updated_at = $5 WHERE U.id = $6 RETURNING *',
+        [username, email, password, home_id, now, user_id]
       );
       await client.release();
       return user;
     }catch(err){
-      console.log('Cant update an user');
+      console.log(err);
     }
   }
 

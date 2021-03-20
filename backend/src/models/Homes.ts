@@ -1,4 +1,5 @@
 import pool from "../database/index";
+import { format } from 'date-fns-tz';
 
 interface IHome {
   name: string;
@@ -57,9 +58,11 @@ class Home{
       const {
         name
       } = data;
+
+      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
       const { rows: home } = await client.query(
-        'UPDATE homes H SET name = $1 WHERE H.creator_id = $2 RETURNING *',
-        [name, creator_id]
+        'UPDATE homes H SET name = $1, updated_at = $2 WHERE H.creator_id = $3 RETURNING *',
+        [name, now, creator_id]
       );
       await client.release();
       return home;

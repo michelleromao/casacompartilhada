@@ -69,8 +69,7 @@ class Does{
     try{
       const client = await pool.connect();
       const { rows: does } = await client.query(
-        'SELECT * FROM does D where D.todo_id = $1',
-        [todo_id]
+        'SELECT distinct on(todo_id) D.* FROM does D order by todo_id, created_at desc'
       );
       await client.release();
       return does;
