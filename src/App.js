@@ -1,37 +1,71 @@
-import React from 'react'
 import { BrowserRouter, Route } from "react-router-dom";
-import Home from './components/Home';
+import Bills from './components/bill/Bills';
 import Navbar from './components/Navbar';
+import Rules from './components/rules/Rules';
+import Shopping from './components/shopping/Shopping';
 import Sidebar from './components/Sidebar';
 import Todo from './components/todo/Todo';
 import './style.css'
+import React, { Component } from 'react'
+import Login from "./components/login/Login";
 
-function App() {
-  return (
-    <BrowserRouter>
+export class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      login: true,
+      casa: false,
+    }
+  }
 
-      <Navbar></Navbar>
+  routes = () => {
+    return (
+      <BrowserRouter>
 
-      <div className="SideAndBody">
+        <Navbar></Navbar>
 
-        <Sidebar></Sidebar>
+        <div className="SideAndBody">
+          <Sidebar></Sidebar>
 
-        <div className="body">
+          <div className="body">
 
-          <Route path="/regras" exact>
-            <Home></Home>
-          </Route>
+            <Route path="/rules">
+              <Rules></Rules>
+            </Route>
 
-          <Route path="/todo">
-            <Todo></Todo>
-          </Route>
+            <Route path="/todo">
+              <Todo></Todo>
+            </Route>
 
+            <Route path="/tobuy">
+              <Shopping></Shopping>
+            </Route>
+
+            <Route path="/bill">
+              <Bills></Bills>
+            </Route>
+          </div>
         </div>
 
-      </div>
+      </BrowserRouter>
+    )
+  }
 
-    </BrowserRouter>
-  );
+  login = () => {
+    return (
+      <div>
+        <Navbar></Navbar>
+
+        <Login></Login>
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      this.state.login ? this.routes() : this.login()
+    )
+  }
 }
 
-export default App;
+export default App

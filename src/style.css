@@ -1,6 +1,6 @@
 /* Default */
 
-body{
+body {
     margin: 0;
     background-color: #FFF7F7;
     height: 100vh;
@@ -8,11 +8,11 @@ body{
     font-family: sans-serif;
 }
 
-.w-full{
+.w-full {
     width: 100%;
 }
 
-.btn{
+.btn {
     color: white;
     font-weight: bold;
     border-radius: 10px;
@@ -21,7 +21,7 @@ body{
     background-color: #6566BE;
 }
 
-.btn-outline{
+.btn-outline {
     color: #6566BE;
     border-radius: 10px;
     border: #6566BE solid 1px;
@@ -29,38 +29,131 @@ body{
     background-color: transparent;
 }
 
-.btn-bar{
+.btn-active {
+    background-color: #6566BE;
+    color: white;
+}
+
+.btn-bar {
     display: flex;
 }
 
-.btn-flex{
+.btn-flex {
     flex: auto;
     margin: 0 10px;
 }
 
-.btn-clear{
+.btn-clear {
     border: none;
     background: none;
     font-size: 150%;
     color: #6566BE;
 }
 
+.padding {
+    padding: 24px;
+}
+
+/* form */
+
+.form {
+    width: 40%;
+    border: 2px solid #6566BE;
+    height: fit-content;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.form h2{
+    color:#6566BE;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    color: #6566BE;
+    font-size: 80%;
+}
+
+.form-group input {
+    width: 100%;
+    border: 1px solid #6566BE;
+    border-radius: 10px;
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form-group textarea{
+    width: 100%;
+    border: 1px solid #6566BE;
+    border-radius: 10px;
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form-group select{
+    width: 100%;
+    border: 1px solid #6566BE;
+    border-radius: 10px;
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form-radio{
+    display: inline-block;
+}
+
+.form-radio > input{
+    width: fit-content;
+}
+
+.d-none{
+    display: none !important;
+}
+
+/* modal */
+
+.modal {
+    position: fixed;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    z-index: 1;
+    width: 85%;
+    height: 85%;
+    display: flex;
+}
+
+.modal > .modal-content{
+    margin: 10px auto;
+    background-color: #FFF7F7;
+}
+
+.modal-close{
+    width: 100%;
+    text-align: right;
+}
 
 /* Navbar */
 
 .navbar {
-    height: 5vh;
+    height: 10vh;
     align-items: center;
     display: flex;
     justify-content: center;
-    padding: 24px;
 }
 
-.navbar > .logo {
-    height: 100%;
+.navbar>.logo {
+    height: 75%;
 }
 
-.navbar-btn{
+.navbar-btn {
     position: fixed;
     right: 24px;
 }
@@ -70,7 +163,7 @@ body{
 .sidebar {
     width: 15vw;
     list-style: none;
-    height: 95vh;
+    height: 90vh;
     display: inline-flex;
     flex-flow: column;
     justify-content: space-around;
@@ -78,7 +171,7 @@ body{
     padding: 0;
 }
 
-.sidebar > a{
+.sidebar>a {
     text-decoration: none;
     background-color: #FA8D85;
     color: white;
@@ -89,17 +182,17 @@ body{
     width: 25%;
 }
 
-a > label {
+a>label {
     display: none;
 }
 
-.sidebar > .active{
+.sidebar>.active {
     background-color: #6566BE !important;
     font-weight: bold;
     width: 100%;
 }
 
-.active > label {
+.active>label {
     display: block;
 }
 
@@ -113,8 +206,93 @@ a > label {
 
 .body {
     display: inline-flex;
-    height: 95vh;
+    height: 90vh;
     width: 85vw;
-    margin: 0;
+}
+
+.login {
+    width: 100vw !important;
+    height: 90vh;
+}
+
+/* Rules */
+
+.postit {
+    width: 25%;
+    min-height: 75px;
+    background-color: #C0C1DA;
     padding: 24px;
+    margin-bottom: 24px;
+    color: #6566BE;
+    border-radius: 10px;
+    box-shadow: 5px 5px 3px #8d8ebb4a;
+}
+
+.postit>.username {
+    font-size: 80%;
+    cursor: pointer;
+}
+
+.postit>.text {
+    display: block;
+    padding-top: 12px;
+    max-height: 70px;
+    /* overflow-y: scroll; */
+}
+
+.postit>.btn-clear {
+    padding: 0;
+    padding-top: 5%;
+    text-align: left;
+    width: fit-content;
+}
+
+.postit-none {
+    width: 25%;
+    min-height: 75px;
+    padding: 24px;
+    margin-bottom: 24px;
+    background-color: transparent;
+    display: inline-flex;
+}
+
+.add{
+    font-size: 50px;
+    width: fit-content;
+    margin: auto;
+    padding: 0;
+}
+
+/* to-do */
+
+.todo {
+    border: 2px solid #6566BE;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.todo>input {
+    display: inline-block;
+    width: 5%;
+    margin: 0;
+}
+
+.todo>label {
+    width: 80%;
+    display: inline-block;
+    color: #6566BE;
+}
+
+.todo>.actions {
+    width: 15%;
+    display: inline-block;
+    text-align: right;
+}
+
+.evenly {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: flex-start;
 }

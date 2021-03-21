@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from '../img/Logo.png'
 import { AiOutlineLogin } from 'react-icons/ai'
 import { AiOutlineLogout } from 'react-icons/ai'
-import {BsGear} from 'react-icons/bs'
+import { BsGear } from 'react-icons/bs'
 
 
 export default function Navbar() {

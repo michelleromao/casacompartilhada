@@ -6,7 +6,7 @@ export default function Sidebar() {
 
     return (
         <div className="sidebar">
-            <NavLink to="/regras" exact>
+            <NavLink to="/rules" exact>
                 <label>
                     Regras
                 </label>
@@ -18,13 +18,13 @@ export default function Sidebar() {
                 </label>
             </NavLink>
 
-            <NavLink to="/lista">
+            <NavLink to="/tobuy">
                 <label>
                     Lista de Compras
                 </label>
             </NavLink>
 
-            <NavLink to="/contas">
+            <NavLink to="/bill">
                 <label>
                     Contas
                 </label>
