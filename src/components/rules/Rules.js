@@ -4,50 +4,30 @@ import { RiDeleteBin2Fill } from 'react-icons/ri'
 import { RiAddCircleFill } from 'react-icons/ri'
 import Modal from '../Modal'
 import $ from 'jquery';
+import { connect } from 'react-redux'
+import { addRule } from '../../store/Rules/Rules.actions'
 
 
 export class Rules extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
-            regra: ""
+            regra: "",
         }
     }
 
-    salvar = (event) =>{
+    salvar = (event) => {
         event.preventDefault()
-        console.log(this.state)
+        let rule = {
+            username: 'georgemoreno',
+            msg: this.state.regra,
+        }
+        this.props.addRule(rule)
+        $("#addRule").addClass("d-none")
+        this.forceUpdate()
     }
 
     render() {
-        let notes = [
-            { id: 1, username: 'georemoreno', msg: 'Não pode deixar casca de fruta em cima da mesa. Não pode deixar casca de fruta em cima da mesa' },
-            { id: 2, username: 'michelleromao', msg: 'Ao sujar o prato, lave!!!' },
-        ]
-
-        let list = []
-        notes.map((response, key) => {
-            return list.push(
-                <div className="postit" key={key}>
-                    <label className="username">
-                        @{response.username}
-                    </label>
-
-                    <div>
-                        <label className="text">
-                            {response.msg}
-                        </label>
-                    </div>
-
-                    <button className="btn-clear">
-                        <RiEditCircleFill></RiEditCircleFill>
-                    </button>
-                    <button className="btn-clear">
-                        <RiDeleteBin2Fill></RiDeleteBin2Fill>
-                    </button>
-                </div>
-            )
-        })
 
         return (
             <div className="w-full btn-bar evenly padding">
@@ -56,7 +36,29 @@ export class Rules extends Component {
                         <RiAddCircleFill></RiAddCircleFill>
                     </button>
                 </div>
-                {list}
+
+                {this.props.rules.map((response, key) => {
+                    return <div className="postit" key={key}>
+                            <label className="username">
+                                @{response.username}
+                            </label>
+
+                            <div>
+                                <label className="text">
+                                    {response.msg}
+                                </label>
+                            </div>
+
+                            <button className="btn-clear">
+                                <RiEditCircleFill></RiEditCircleFill>
+                            </button>
+                            <button className="btn-clear">
+                                <RiDeleteBin2Fill></RiDeleteBin2Fill>
+                            </button>
+                        </div>
+                })}
+
+                {this.state.list}
 
                 <Modal id="addRule">
                     <h2>
@@ -67,7 +69,7 @@ export class Rules extends Component {
                             <label>
                                 Descrição:
                         </label>
-                            <textarea placeholder="Adicione a regra" rows="5" required onChange={(event)=>{this.setState({regra: event.target.value})}}>
+                            <textarea placeholder="Adicione a regra" rows="5" required onChange={(event) => { this.setState({ regra: event.target.value }) }}>
                             </textarea>
                         </div>
                         <div className="form-group">
@@ -81,4 +83,16 @@ export class Rules extends Component {
     }
 }
 
-export default Rules
+function mapStateToProps(state) {
+    return {
+        rules: state.rules
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        addRule: (rule) => dispatch(addRule(rule))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Rules)
