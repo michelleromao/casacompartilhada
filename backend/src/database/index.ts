@@ -3,6 +3,8 @@ import { Pool } from 'pg';
 
 const pool = new Pool(dbConfig);
 
+const create_uuid_extension = `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`;
+
 const bill_status_paid = `
 CREATE OR REPLACE FUNCTION bill_status_paid(uuid)
   RETURNS void AS $function$
@@ -33,11 +35,18 @@ CREATE OR REPLACE FUNCTION bill_status_paid(uuid)
 pool.connect((err, client, done) =>{
   if(err) throw err;
   client.query(bill_status_paid, (err, res) =>{
-    done();
     if(err){
       console.log(err.stack)
     }else{
       console.log('bill_status_paid is running');
+    }
+  }),
+  client.query(create_uuid_extension, (err, res) => {
+    done();
+    if(err){
+      console.log(err.stack)
+    }else{
+      console.log('create_uuid_extension is running');
     }
   })
 })
