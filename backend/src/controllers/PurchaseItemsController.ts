@@ -6,8 +6,7 @@ import CreatePurchaseItemDTO from "../interfaces/CreatePurchaseItemDTO";
 export = {
   async index(request: Request, response: Response){
     try{
-      const { status } = request.query;
-      const { home_id } = request.body;
+      const { status, home_id } = request.query;
       const find = await PurchaseItems.findByStatus(status, home_id);
       const purchase_items = find?.map((purchase_item: IndexPurchaseItemDTO) => {
         return ({id: purchase_item.id,

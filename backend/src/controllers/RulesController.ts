@@ -6,7 +6,7 @@ import CreateRulesDTO from "../interfaces/CreateRulesDTO";
 export = {
   async index(request: Request, response: Response){
     try{
-      const {home_id} = request.query;
+      const { home_id } = request.query;
       const find = await Rules.findByHomeId(home_id);
       const rules = find?.map((rule: IndexRulesDTO) => {
         return ({id: rule.id, description: rule.description, cretor_id: rule.creator_id})
