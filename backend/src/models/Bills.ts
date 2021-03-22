@@ -131,17 +131,15 @@ class Bills{
   static async findByIdAndDelete(bill_id: string, creator_id: string){
     try{
       const client = await pool.connect();
-      const { rows: bills } = await client.query(
+      const objeto = await client.query(
         'DELETE FROM bills B where B.id = $1 AND B.creator_id = $2',
         [bill_id, creator_id]
       );
-      const {rows : find} = await client.query(
-        'SELECT * FROM bills B where B.id = $1',  [bill_id]);
       await client.release();
-      if(find.length !== 0){
-        return ({message: 'has not been deleted'});
-      }else{
+      if(objeto.rowCount !== 0){
         return ({message: 'deleted'});
+      }else{
+        return ({message: 'has not been deleted'});
       }
     }catch(err){
       console.log('Cant delete a bill');

@@ -91,18 +91,16 @@ class Rules{
   static async findByIdAndDelete(rule_id: string, creator_id: string){
     try{
       const client = await pool.connect();
-      const { rows: rule } = await client.query(
+      const objeto = await client.query(
         'DELETE FROM rules R where R.id = $1 AND R.creator_id = $2',
         [rule_id, creator_id]
       );
-      const {rows : find} = await client.query(
-        'SELECT * FROM rules R where R.id = $1',  [rule_id]);
       await client.release();
-      if(find.length !== 0){
-        return ({message: 'has not been deleted'});
-      }else{
-        return ({message: 'deleted'});
-      }
+     if(objeto.rowCount !== 0){
+      return ({message: 'deleted'});
+     }else{
+      return ({message: 'has not been deleted'});
+     }
     }catch(err){
       console.log('Cant delete a rule');
       return ({message: 'has not been deleted'});

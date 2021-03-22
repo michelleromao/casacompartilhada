@@ -149,17 +149,15 @@ class ToDos{
   static async findByIdAndDelete(todo_id: string, creator_id: string){
     try{
       const client = await pool.connect();
-      const { rows: todo } = await client.query(
+      const objeto = await client.query(
         'DELETE FROM todos T where T.id = $1 AND T.creator_id = $2',
         [todo_id, creator_id]
       );
-      const {rows : find} = await client.query(
-        'SELECT * FROM todos T where T.id = $1',  [todo_id]);
       await client.release();
-      if(find.length !== 0){
-        return ({message: 'has not been deleted'});
-      }else{
+      if(objeto.rowCount !== 0){
         return ({message: 'deleted'});
+      }else{
+        return ({message: 'has not been deleted'});
       }
     }catch(err){
       console.log('Cant delete an item of To Do List');

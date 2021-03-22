@@ -93,17 +93,15 @@ class Users{
   static async findByIdAndDelete(user_id: string){
     try{
       const client = await pool.connect();
-      const { rows: user } = await client.query(
+      const objeto = await client.query(
         'DELETE FROM users U where U.id = $1',
         [user_id]
       );
-      const {rows : find} = await client.query(
-        'SELECT * FROM users U where U.id = $1',  [user_id]);
       await client.release();
-      if(find.length !== 0){
-        return ({message: 'has not been deleted'});
-      }else{
+      if(objeto.rowCount !== 0){
         return ({message: 'deleted'});
+      }else{
+        return ({message: 'has not been deleted'});
       }
     }catch(err){
       console.log('Cant delete an user');

@@ -123,17 +123,15 @@ class PurchaseItems{
   static async findByIdAndDelete(purchase_item_id: string, creator_id: string){
     try{
       const client = await pool.connect();
-      const { rows: purchaseitem } = await client.query(
+      const objeto = await client.query(
         'DELETE FROM purchase_items P where P.id = $1 AND P.creator_id = $2',
         [purchase_item_id, creator_id]
       );
-      const {rows : find} = await client.query(
-        'SELECT * FROM purchase_items P where P.id = $1',  [purchase_item_id]);
       await client.release();
-      if(find.length !== 0){
-        return ({message: 'has not been deleted'});
-      }else{
+      if(objeto.rowCount !== 0){
         return ({message: 'deleted'});
+      }else{
+        return ({message: 'has not been deleted'});
       }
     }catch(err){
       console.log('Cant delete a purchase item');
