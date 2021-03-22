@@ -7,7 +7,8 @@ export = {
   async index(request: Request, response: Response){
     try{
       const { home_id } = request.query;
-      const find = await Rules.findByHomeId(home_id);
+      const home_idStr = String(home_id);
+      const find = await Rules.findByHomeId(home_idStr);
       const rules = find?.map((rule: IndexRulesDTO) => {
         return ({id: rule.id, description: rule.description, creator_id: rule.creator_id})
       })

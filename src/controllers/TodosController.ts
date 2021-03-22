@@ -30,7 +30,7 @@ export = {
               })
             })).then(resp => {
               var idTodos: string[] = [];
-              var toResp: IndexToDoDTO[] = [];
+              var toResp = [];
               Promise.all(resp.map((rp: IndexToDoDTO) => {
                 idTodos.push(rp.id);
                 return Does.findByToDoId(rp.id);
@@ -51,7 +51,7 @@ export = {
                 var difference = idTodos.filter(x => idDoes.indexOf(x) === -1);
                 if(difference.length !== 0){
                   difference.forEach(item => {
-                    toResp.push(`${item}`);
+                    toResp.push(item);
                   })
                 }
                 Promise.all(toResp.map(item => {
@@ -84,9 +84,8 @@ export = {
               })).then(resp => {
                 resp = resp.filter(Boolean);
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
+                var toResp = [];
                 Promise.all(resp.map((rp: IndexToDoDTO) => {
                   idTodos.push(rp.id);
                   return Does.findByToDoId(rp.id);
@@ -107,7 +106,7 @@ export = {
                   var difference = idTodos.filter(x => idDoes.indexOf(x) === -1);
                   if(difference.length !== 0){
                     difference.forEach(item => {
-                      toResp.push(`${item}`);
+                      toResp.push(item);
                     })
                   }
                   Promise.all(toResp.map(item => {
@@ -125,9 +124,8 @@ export = {
               })).then(resp => {
                 resp = resp.filter(Boolean);
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
+                var toResp = [];
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
                 Promise.all(resp.map((rp: IndexToDoDTO) => {
                   idTodos.push(rp.id);
                   return Does.findByToDoId(rp.id);
@@ -166,9 +164,8 @@ export = {
               })).then(resp => {
                 resp = resp.filter(Boolean);
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
+                var toResp = [];
                 Promise.all(resp.map((rp: IndexToDoDTO) => {
                   idTodos.push(rp.id);
                   return Does.findByToDoId(rp.id);
@@ -189,7 +186,7 @@ export = {
                   var difference = idTodos.filter(x => idDoes.indexOf(x) === -1);
                   if(difference.length !== 0){
                     difference.forEach(item => {
-                      toResp.push(`${item}`);
+                      toResp.push(item);
                     })
                   }
                   Promise.all(toResp.map(item => {
@@ -207,9 +204,8 @@ export = {
               })).then(resp => {
                 resp = resp.filter(Boolean);
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
+                var toResp = [];
                 Promise.all(resp.map((rp: IndexToDoDTO) => {
                   idTodos.push(rp.id);
                   return Does.findByToDoId(rp.id);
@@ -230,7 +226,7 @@ export = {
                   var difference = idTodos.filter(x => idDoes.indexOf(x) === -1);
                   if(difference.length !== 0){
                     difference.forEach(item => {
-                      toResp.push(`${item}`);
+                      toResp.push(item);
                     })
                   }
                   Promise.all(toResp.map(item => {
@@ -248,9 +244,8 @@ export = {
               })).then(resp => {
                 resp = resp.filter(Boolean);
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
+                var toResp = [];
                 Promise.all(resp.map((rp: IndexToDoDTO) => {
                   idTodos.push(rp.id);
                   return Does.findByToDoId(rp.id);
@@ -271,7 +266,7 @@ export = {
                   var difference = idTodos.filter(x => idDoes.indexOf(x) === -1);
                   if(difference.length !== 0){
                     difference.forEach(item => {
-                      toResp.push(`${item}`);
+                      toResp.push(item);
                     })
                   }
                   Promise.all(toResp.map(item => {
@@ -289,9 +284,8 @@ export = {
               })).then(resp => {
                 resp = resp.filter(Boolean);
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
+                var toResp = [];
                 Promise.all(resp.map((rp: IndexToDoDTO) => {
                   idTodos.push(rp.id);
                   return Does.findByToDoId(rp.id);
@@ -312,7 +306,7 @@ export = {
                   var difference = idTodos.filter(x => idDoes.indexOf(x) === -1);
                   if(difference.length !== 0){
                     difference.forEach(item => {
-                      toResp.push(`${item}`);
+                      toResp.push(item);
                     })
                   }
                   Promise.all(toResp.map(item => {
@@ -330,9 +324,8 @@ export = {
               })).then(resp => {
                 resp = resp.filter(Boolean);
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
+                var toResp = [];
                 var idTodos: string[] = [];
-                var toResp: IndexToDoDTO[] = [];
                 Promise.all(resp.map((rp: IndexToDoDTO) => {
                   idTodos.push(rp.id);
                   return Does.findByToDoId(rp.id);
@@ -353,7 +346,7 @@ export = {
                   var difference = idTodos.filter(x => idDoes.indexOf(x) === -1);
                   if(difference.length !== 0){
                     difference.forEach(item => {
-                      toResp.push(`${item}`);
+                      toResp.push(item);
                     })
                   }
                   Promise.all(toResp.map(item => {
@@ -387,9 +380,8 @@ export = {
             })).then(resp => {
               resp = resp.filter(Boolean);
               var idTodos: string[] = [];
-              var toResp: IndexToDoDTO[] = [];
               var idTodos: string[] = [];
-              var toResp: IndexToDoDTO[] = [];
+              var toResp = [];
               Promise.all(resp.map((rp: IndexToDoDTO) => {
                 idTodos.push(rp.id);
                 return Does.findByToDoId(rp.id);
@@ -410,7 +402,7 @@ export = {
                 var difference = idTodos.filter(x => idDoes.indexOf(x) === -1);
                 if(difference.length !== 0){
                   difference.forEach(item => {
-                    toResp.push(`${item}`);
+                    toResp.push(item);
                   })
                 }
                 Promise.all(toResp.map(item => {

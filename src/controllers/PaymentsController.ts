@@ -6,7 +6,8 @@ export = {
   async index(request: Request, response: Response){
     try{
       const { bill_id } = request.query;
-      const find = await Payments.findByBillId(bill_id);
+      const bill_idStr = String(bill_id);
+      const find = await Payments.findByBillId(bill_idStr);
       const payment = find?.map((payment : IndexPaymentDTO) => {
         return({
           payer_id: payment.payer_id,

@@ -7,7 +7,9 @@ export = {
   async index(request: Request, response: Response){
     try{
       const { status, home_id } = request.query;
-      const find = await PurchaseItems.findByStatus(status, home_id);
+      const statusStr = String(status);
+      const home_idStr = String(home_id);
+      const find = await PurchaseItems.findByStatus(statusStr, home_idStr);
       const purchase_items = find?.map((purchase_item: IndexPurchaseItemDTO) => {
         return ({id: purchase_item.id,
           item: purchase_item.item,
@@ -56,8 +58,9 @@ export = {
     try{
       const { id } = request.params;
       const { buyer_id } = request.query;
+      var buyer_idStr = String(buyer_id);
       if(buyer_id){
-        const purchase_item = await PurchaseItems.updateBuyer(buyer_id, id);
+        const purchase_item = await PurchaseItems.updateBuyer(buyer_idStr, id);
         return response.json(purchase_item);
       }else{
         const { item, status, creator_id } = request.body;

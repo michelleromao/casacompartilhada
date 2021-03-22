@@ -7,8 +7,11 @@ export = {
   async index(request: Request, response: Response) {
     try {
       const { status, type, home_id } = request.query;
-      if (status) {
-        const find = await Bills.findByStatus(status, home_id);
+      const statusStr = String(status);
+      const home_idStr = String(home_id);
+      const typeStr = String(type);
+      if (statusStr) {
+        const find = await Bills.findByStatus(statusStr, home_idStr);
         const bills = find?.map((bill: IndexBillDTO) => {
           return ({
             id: bill.id,
@@ -25,7 +28,7 @@ export = {
           return response.json(bills);
         }
       } else if (type) {
-        const find = await Bills.findByType(type, home_id);
+        const find = await Bills.findByType(typeStr, home_idStr);
         const bills = find?.map((bill: IndexBillDTO) => {
           return ({
             id: bill.id,

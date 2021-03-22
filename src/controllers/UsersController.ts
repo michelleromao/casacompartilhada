@@ -11,7 +11,8 @@ export = {
   async index(request: Request, response: Response){
     try{
       const { home_id } = request.query;
-      const find = await Users.findByHomeId(home_id);
+      const home_idStr = String(home_id);
+      const find = await Users.findByHomeId(home_idStr);
       const user = find?.map((user: ShowUserDTO) => {
         return ({id: user.id, username: user.username, email: user.email});
       })
