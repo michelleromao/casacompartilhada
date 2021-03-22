@@ -58,9 +58,9 @@ export = {
   async delete(request: Request, response: Response){
     try{
       const { id } = request.params;
-      const { cretor_id } = request.body;
-      await Rules.findByIdAndDelete(id, cretor_id);
-      return response.json({message: 'Rule deleted'});
+      const { creator_id } = request.body;
+      const res = await Rules.findByIdAndDelete(id, creator_id);
+      return response.json(res);
     }catch(err){
       console.log(err);
     }

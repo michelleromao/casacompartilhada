@@ -127,10 +127,17 @@ class PurchaseItems{
         'DELETE FROM purchase_items P where P.id = $1 AND P.creator_id = $2',
         [purchase_item_id, creator_id]
       );
+      const {rows : find} = await client.query(
+        'SELECT * FROM purchase_items P where P.id = $1',  [purchase_item_id]);
       await client.release();
-      return purchaseitem;
+      if(find.length !== 0){
+        return ({message: 'has not been deleted'});
+      }else{
+        return ({message: 'deleted'});
+      }
     }catch(err){
       console.log('Cant delete a purchase item');
+      return ({message: 'has not been deleted'});
     }
   }
 }

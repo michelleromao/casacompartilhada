@@ -97,10 +97,17 @@ class Users{
         'DELETE FROM users U where U.id = $1',
         [user_id]
       );
+      const {rows : find} = await client.query(
+        'SELECT * FROM users U where U.id = $1',  [user_id]);
       await client.release();
-      return user;
+      if(find.length !== 0){
+        return ({message: 'has not been deleted'});
+      }else{
+        return ({message: 'deleted'});
+      }
     }catch(err){
       console.log('Cant delete an user');
+      return ({message: 'has not been deleted'});
     }
   }
 }

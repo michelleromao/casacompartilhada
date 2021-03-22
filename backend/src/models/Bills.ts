@@ -135,10 +135,17 @@ class Bills{
         'DELETE FROM bills B where B.id = $1 AND B.creator_id = $2',
         [bill_id, creator_id]
       );
+      const {rows : find} = await client.query(
+        'SELECT * FROM bills B where B.id = $1',  [bill_id]);
       await client.release();
-      return bills;
+      if(find.length !== 0){
+        return ({message: 'has not been deleted'});
+      }else{
+        return ({message: 'deleted'});
+      }
     }catch(err){
       console.log('Cant delete a bill');
+      return ({message: 'has not been deleted'});
     }
   }
 }

@@ -89,8 +89,8 @@ export = {
   async delete(request: Request, response: Response){
     try{
       const { id } = request.params;
-      await Users.findByIdAndDelete(id);
-      return response.json({message: 'User deleted'});
+      const res = await Users.findByIdAndDelete(id);
+      return response.json(res);
     }catch(err){
       console.log(err);
     }

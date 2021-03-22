@@ -78,10 +78,17 @@ class Home{
         'DELETE FROM homes H where H.id = $1 AND H.creator_id = $2',
         [home_id, creator_id]
       );
+      const {rows : find} = await client.query(
+        'SELECT * FROM homes H where H.id = $1',  [home_id]);
       await client.release();
-      return home;
+      if(find.length !== 0){
+        return ({message: 'has not been deleted'});
+      }else{
+        return ({message: 'deleted'});
+      }
     }catch(err){
       console.log('Cant delete a home');
+      return ({message: 'has not been deleted'});
     }
   }
 }
