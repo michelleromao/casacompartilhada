@@ -96,11 +96,11 @@ class Rules{
         [rule_id, creator_id]
       );
       await client.release();
-     if(objeto.rowCount !== 0){
-      return ({message: 'deleted'});
-     }else{
-      return ({message: 'has not been deleted'});
-     }
+      if(objeto.rowCount !== 0){
+        return ({message: 'deleted'});
+      }else{
+        return ({message: 'has not been deleted'});
+      }
     }catch(err){
       console.log('Cant delete a rule');
       return ({message: 'has not been deleted'});
