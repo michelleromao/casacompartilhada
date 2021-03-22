@@ -90,7 +90,7 @@ class PurchaseItems{
       const client = await pool.connect();
       const now: string = format((new Date()), "yyyy-MM-dd HH:mm:ss.ssss");
       const {rows: purchaseitem} = await client.query(
-        'UPDATE purchase_item P SET buyer_id = $1, updated_at = $2 WHERE P.id = $3 RETURNING *',
+        'UPDATE purchase_items P SET buyer_id = $1, updated_at = $2 WHERE P.id = $3 RETURNING *',
         [id_buyer, now, purchase_item_id]
       );
       await client.release();
