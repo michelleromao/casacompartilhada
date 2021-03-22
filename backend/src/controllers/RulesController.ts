@@ -1,4 +1,4 @@
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
 import Rules from "../models/Rules";
 import IndexRulesDTO from "../interfaces/IndexRulesDTO";
 import CreateRulesDTO from "../interfaces/CreateRulesDTO";
@@ -9,7 +9,7 @@ export = {
       const { home_id } = request.query;
       const find = await Rules.findByHomeId(home_id);
       const rules = find?.map((rule: IndexRulesDTO) => {
-        return ({id: rule.id, description: rule.description, cretor_id: rule.creator_id})
+        return ({id: rule.id, description: rule.description, creator_id: rule.creator_id})
       })
       if(rules){
         return response.json(rules);
@@ -24,7 +24,7 @@ export = {
       const { id } = request.params;
       const find = await Rules.findById(id);
       const rule = find?.map((rule: IndexRulesDTO) =>{
-        return ({id: rule.id, description: rule.description, cretor_id: rule.creator_id});
+        return ({id: rule.id, description: rule.description, creator_id: rule.creator_id});
       })
       if(rule){
         return response.json(rule[0]);
