@@ -118,7 +118,7 @@ class ToDos{
         day_of_week,
         day_of_month,
       } = data;
-      const now: string = format(startOfDay((new Date())), 'yyyy-MM-dd HH:mm:SS.sssss');
+      const now: string = format((new Date()), "yyyy-MM-dd HH:mm:ss.ssss");
       if(frequency==='daily'){
         const { rows: todo } = await client.query(
           'UPDATE todos T SET task = $1, frequency = $2, updated_at = $3 WHERE T.id = $4 AND T.creator_id = $5 RETURNING *',

@@ -88,7 +88,7 @@ class PurchaseItems{
   static async updateBuyer(id_buyer:string, purchase_item_id: string){
     try{
       const client = await pool.connect();
-      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
+      const now: string = format((new Date()), "yyyy-MM-dd HH:mm:ss.ssss");
       const {rows: purchaseitem} = await client.query(
         'UPDATE purchase_item P SET buyer_id = $1, updated_at = $2 WHERE P.id = $3 RETURNING *',
         [id_buyer, now, purchase_item_id]
@@ -108,7 +108,7 @@ class PurchaseItems{
         status
       } = data;
 
-      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
+      const now: string = format((new Date()), "yyyy-MM-dd HH:mm:ss.ssss");
       const { rows: purchaseitem } = await client.query(
         'UPDATE purchase_items P SET item = $1, status = $2, updated_at = $3 WHERE P.id = $4 AND P.creator_id = $5 RETURNING *',
         [item, status, now, purchase_item_id, creator_id]

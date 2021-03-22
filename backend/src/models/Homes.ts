@@ -59,7 +59,7 @@ class Home{
         name
       } = data;
 
-      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
+      const now: string = format((new Date()), "yyyy-MM-dd HH:mm:ss.ssss");
       const { rows: home } = await client.query(
         'UPDATE homes H SET name = $1, updated_at = $2 WHERE H.creator_id = $3 RETURNING *',
         [name, now, creator_id]

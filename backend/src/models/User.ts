@@ -78,7 +78,7 @@ class Users{
         password,
         home_id
       } = data;
-      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
+      const now: string = format((new Date()), "yyyy-MM-dd HH:mm:ss.ssss");
       const { rows: user } = await client.query(
         'UPDATE users U SET username = $1, email = $2, password = $3, home_id = $4, updated_at = $5 WHERE U.id = $6 RETURNING *',
         [username, email, password, home_id, now, user_id]

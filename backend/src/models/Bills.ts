@@ -116,7 +116,7 @@ class Bills{
         value,
         home,
       } = data;
-      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
+      const now: string = format((new Date()), "yyyy-MM-dd HH:mm:ss.ssss");
       const { rows: bills } = await client.query(
         'UPDATE bills B SET name = $1, responsible_id = $2, due = $3, value = $4, home = $5, updated_at = $6 WHERE B.id = $7 AND B.creator_id = $8 AND B.home_id = $9 RETURNING *',
         [name, responsible_id, due, value, home, now, bill_id, creator_id, home_id]

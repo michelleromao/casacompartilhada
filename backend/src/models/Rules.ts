@@ -76,7 +76,7 @@ class Rules{
         description
       } = data;
 
-      const now: string = format((new Date()), 'yyyy-MM-dd HH:mm:SS.sssss');
+      const now: string = format((new Date()), "yyyy-MM-dd HH:mm:ss.ssss");
       const { rows: rule } = await client.query(
         'UPDATE rules R SET description = $1, updated_at = $2 WHERE R.id = $3 AND R.creator_id = $4 RETURNING *',
         [description, now, rule_id, creator_id]
@@ -84,7 +84,7 @@ class Rules{
       await client.release();
       return rule;
     }catch(err){
-      console.log('Cant update a rule');
+      console.log(err);
     }
   }
 
