@@ -8,7 +8,7 @@
     "run-migrations": "knex migrate:latest",
     "start": "npm run run-migrations && node dist/src/index.js",
     "build": "tsc",
-    "postinstall": "npm run dist"
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
