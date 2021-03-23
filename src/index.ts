@@ -4,7 +4,7 @@ import routes from './routes/index';
 import './database/index';
 
 const app = express();
-const port = 3333 || process.env.PORT;
+const port = process.env.PORT || 3333;
 app.use(cors());
 app.use(express.json());
 

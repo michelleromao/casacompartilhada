@@ -1,9 +1,9 @@
 const dbConfig = {
   dialect: "postgres",
-  host: "localhost",
-  username: "postgres",
-  password: "admin",
-  database: "casacompartilhada",
+  host: process.env.HOST || "localhost",
+  username: process.env.USERNAME || "postgres",
+  password: process.env.PASSWORD || "admin",
+  database: process.env.DATABASE || "casacompartilhada",
   operatorAliases: false,
   define: {
     timestamps: true,
