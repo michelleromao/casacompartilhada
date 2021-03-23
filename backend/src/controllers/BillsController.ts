@@ -19,6 +19,7 @@ export = {
             home: bill.home,
             status: bill.status,
             creator_id: bill.creator_id,
+            home_id: bill.home_id,
           });
         });
         if (bills) {
@@ -36,6 +37,7 @@ export = {
             home: bill.home,
             status: bill.status,
             creator_id: bill.creator_id,
+            home_id: bill.home_id,
           });
         })
         if (bills) {
