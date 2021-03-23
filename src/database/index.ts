@@ -1,4 +1,4 @@
-const dbConfig = require("../config/database");
+import  dbConfig  from "../config/database";
 import { Pool } from 'pg';
 
 const pool = new Pool(dbConfig);

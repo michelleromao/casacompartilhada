@@ -34,7 +34,7 @@ const knexfile = {
     },
     migrations: {
       tableName: 'migrations',
-      directory: path.resolve(__dirname,'dist','database','migrations')
+      directory: path.resolve(__dirname,'dist','src','database','migrations')
     }
   }
 
