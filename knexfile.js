@@ -1,6 +1,6 @@
 // Update with your config settings.
-import dbConfig from "./src/config/database";
-import path from "path";
+const dbConfig = require("./src/config/database");
+const path = require("path");
 
 const knexfile = {
   development: {
