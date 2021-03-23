@@ -9,7 +9,8 @@ const dbConfig = {
     timestamps: true,
     underscored: true,
     underscoredAll: true
-  }
+  },
+  ssl: process.env.NODE_ENV==="production" ? true : false,
 };
 
 module.exports = dbConfig;
