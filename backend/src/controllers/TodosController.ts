@@ -7,12 +7,13 @@ import Does from "../models/Does";
 
 import IndexToDoDTO from "../interfaces/IndexToDoDTO"
 import IndexDoesDTO from "../interfaces/IndexDoesDTO"
+import Users from '../models/User';
 
 export = {
   async index(request: Request, response: Response){
     try{
       const {id} = request.params;
-      const {frequency, does} = request.query;
+      const {frequency, does, id_home} = request.query;
       if(frequency){
         if(frequency === 'daily'){
           const find = await ToDos.findByFrequency(id, frequency);
@@ -424,24 +425,11 @@ export = {
         }
       }
       else if(does === 'true'){
-        const findToDos = await ToDos.findByIdHome(id);
-        const done = findToDos?.map((todo) => {
-          return(todo.id);
-        });
-        if(done){
-          Promise.all(done.map((item) => {
-            const doesId =  Does.findByToDoId(item);
-            return doesId;
-          })).then(resp =>{
-            resp.forEach((rp) => {
-              if(rp && rp?.length !== 0)
-              return response.json(rp)
-            })
-          })
-        }
+        const findToDos = await Does.findTodosDone(id);
+        return response.json(findToDos);
       }else{
-        const {id} = request.params;
         const find = await ToDos.findById(id);
+        console.log(find)
         const todo = find?.map((todo: IndexToDoDTO) => {
           return({
             id: todo.id,

@@ -18,6 +18,10 @@ class Home{
         'INSERT INTO homes (name, creator_id) values ($1, $2) RETURNING *',
         [name, creator_id]
       );
+      const { rows: user } = await client.query(
+        'UPDATE users U SET home_id = $1 WHERE id = $2',
+        [home[0].id, creator_id]
+      );
       await client.release();
       return home;
     }catch(err){

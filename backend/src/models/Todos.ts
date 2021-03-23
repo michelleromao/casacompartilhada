@@ -92,7 +92,6 @@ class ToDos{
     }catch(err){
       console.log('Cant find items of ToDo List of a home');
     }
-
   }
 
   static async findByFrequency(home_id: string, frequency: string){

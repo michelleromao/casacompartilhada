@@ -77,6 +77,20 @@ class Does{
       console.log('Cant find a does');
     }
   }
+
+  static async findTodosDone(home_id: string){
+    try{
+      const client = await pool.connect();
+      const { rows: does } = await client.query(
+        'SELECT D.id as does_id, U.id as doer_id, username, D.todo_id, T.task, T.day_of_week, T.day_of_month, D.created_at from users U inner join does D ON D.doer_id = U.id INNER JOIN todos T ON D.todo_id = T.id AND U.home_id = T.home_id AND T.home_id = $1',
+        [home_id]
+      );
+      await client.release();
+      return does;
+    }catch(err){
+      console.log('Cant find a the todos done');
+    }
+  }
 }
 
 export default Does;
