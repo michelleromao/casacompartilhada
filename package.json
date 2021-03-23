@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --inspect --ignore-watch node_modules ./src/index.ts",
     "run-migrations": "knex migrate:latest",
-    "start": "NODE_ENV=production npm run run-migrations && node dist/src/index.js",
+    "start": "NODE_ENV=production npm run run-migrations && node dist/index.js",
     "build": "tsc",
     "postinstall": "npm run build"
   },
