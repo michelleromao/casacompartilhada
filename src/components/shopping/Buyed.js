@@ -18,7 +18,7 @@ export class Buyed extends Component {
 
         if (this.props.buyed !== []) {
             this.props.buyed.map((busca, index) => {
-                return compra.push(<Item text={busca.item} value={index} key={index} remove={()=>{this.apagar(busca.id)}}></Item>)
+                return compra.push(<Item text={busca.item} value={index} key={index}></Item>)
             })
         }
 

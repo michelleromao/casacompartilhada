@@ -13,9 +13,7 @@ export class Item extends Component {
             </label>
             <div className="actions">
                 {this.props.edit ? <button className="btn-clear" onClick={() => { $("#"+this.props.modal).removeClass("d-none") }}><RiEditCircleFill></RiEditCircleFill></button> : ""}
-                <button className="btn-clear" onClick={this.props.remove}>
-                    <RiDeleteBin2Fill></RiDeleteBin2Fill>
-                </button>
+                {this.props.remo ? <button className="btn-clear" onClick={this.props.remove}><RiDeleteBin2Fill></RiDeleteBin2Fill></button> : ""}
             </div>
         </div>
         )

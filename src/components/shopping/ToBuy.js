@@ -1,20 +1,43 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { buyItem, deleteShop, getShop } from '../../store/Shopping/Shopping.reducer'
+import { buyItem, deleteShop, editItem, getShop } from '../../store/Shopping/Shopping.reducer'
 import Modal from '../Modal'
 import Item from './Item'
 
 export class ToBuy extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            item: "",
+            idUpdate: "",
+            status: "",
+        }
+    }
     componentDidMount() {
         this.props.getShop(this.props.login.home_id)
     }
 
     apagar = (id) => {
-        this.props.deleteShop({ item_id: id, user_id: this.props.login.user_id })
+        if (window.confirm("Deseja realmente apagar?")) {
+            this.props.deleteShop({ item_id: id, user_id: this.props.login.user_id })
+        }
     }
 
     comprar = (id) => {
-        this.props.buyItem({ item_id: id, user_id: this.props.login.user_id })
+        if (window.confirm("Podemos passar para os itens comprados?")) {
+            this.props.buyItem({ item_id: id, user_id: this.props.login.user_id })
+        }
+    }
+
+    atualizar = (event) => {
+        event.preventDefault()
+        let item = {
+            item_id: this.state.idUpdate,
+            item: this.state.item,
+            status: this.state.status,
+            creator_id: this.props.login.user_id
+        }
+        this.props.editItem(item)
     }
 
     render() {
@@ -28,12 +51,12 @@ export class ToBuy extends Component {
                         <h2>
                             Comprar
                     </h2>
-                        <form onSubmit={this.salvar}>
+                        <form onSubmit={this.atualizar}>
                             <div className="form-group">
                                 <label>
                                     Item:
                             </label>
-                                <input type="text" id="task" required onChange={(event) => { this.setState({ item: event.target.value }) }}></input>
+                                <input type="text" id="task" defaultValue={busca.item} onChange={(event) => { this.setState({ item: event.target.value, idUpdate: busca.id, status: busca.status }) }}></input>
                             </div>
                             <div className="form-group">
                                 <input type="submit" className="btn" value="Salvar"></input>
@@ -41,7 +64,9 @@ export class ToBuy extends Component {
                         </form>
                     </Modal>
                 )
-                return compra.push(<Item text={busca.item} modal={busca.id} value={index} key={index} edit={true} select={() => { this.comprar(busca.id) }} selecionar={true} remove={() => { this.apagar(busca.id) }}></Item>)
+                return compra.push(
+                    <Item text={busca.item} modal={busca.id} value={index} key={index} edit={busca.creator_id===this.props.login.user_id} select={() => { this.comprar(busca.id) }} selecionar={true} remo={busca.creator_id===this.props.login.user_id} remove={() => { this.apagar(busca.id) }}></Item>
+                )
             })
         }
         return (
@@ -71,6 +96,9 @@ const mapDispatchToProps = (dispatch) => {
         buyItem: (item) => {
             dispatch(buyItem(item))
         },
+        editItem: (item) => {
+            dispatch(editItem(item));
+        }
     }
 }
 

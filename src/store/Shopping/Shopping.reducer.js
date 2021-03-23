@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import $ from 'jquery';
 
 export const shoppingSlice = createSlice({
     name: 'shopping',
@@ -30,9 +29,17 @@ export const shoppingSlice = createSlice({
             )
         },
         buyItem: (state, action) => {
-            axios.put('http://localhost:3333/purchaseitem/' + action.payload.item_id + "?buyer_id=" + action.payload.user_id ).then(
+            axios.put('http://localhost:3333/purchaseitem/' + action.payload.item_id + "?buyer_id=" + action.payload.user_id).then(
                 function (response) {
                     console.log(response.status)
+                }
+            )
+        },
+        editItem: (state, action) => {
+            // console.log(action.payload)
+            axios.put('http://localhost:3333/purchaseitem/' + action.payload.item_id, { item: action.payload.item, status: action.payload.status, creator_id: action.payload.creator_id }).then(
+                function (response) {
+                    console.log(response)
                 }
             )
         }
@@ -43,7 +50,7 @@ export const shoppingSlice = createSlice({
 
 export default shoppingSlice.reducer
 
-export const { setShop, setBuyed, addShop, deleteShop, buyItem } = shoppingSlice.actions
+export const { setShop, setBuyed, addShop, deleteShop, buyItem, editItem } = shoppingSlice.actions
 
 export function getShop(id_home) {
     return async function (dispatch) {

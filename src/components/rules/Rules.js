@@ -42,11 +42,17 @@ export class Rules extends Component {
             rule_id: this.state.idUpdate,
         }
         this.props.updateRule(rule)
-        $("#"+this.state.idUpdate).addClass("d-none")
+        $("#" + this.state.idUpdate).addClass("d-none")
         this.setState({
             idUpdate: "",
             regraUpdate: "",
         })
+    }
+
+    deleteRule = (id) => {
+        if (window.confirm("Deseja realmente apagar?")) {
+            this.props.removeRule({ user_id: this.props.login.user_id, rule_id: id })
+        }
     }
 
 
@@ -71,12 +77,8 @@ export class Rules extends Component {
                                 </label>
                             </div>
 
-                            <button className="btn-clear" onClick={() => { $("#" + response.id).removeClass("d-none") }}>
-                                <RiEditCircleFill></RiEditCircleFill>
-                            </button>
-                            <button className="btn-clear" onClick={() => { this.props.removeRule({ user_id: this.props.login.user_id, rule_id: response.id }) }}>
-                                <RiDeleteBin2Fill></RiDeleteBin2Fill>
-                            </button>
+                            {response.cretor_id === this.props.login.user_id ? <button className="btn-clear" onClick={() => { $("#" + response.id).removeClass("d-none") }}><RiEditCircleFill></RiEditCircleFill></button>: ""}
+                            {response.cretor_id === this.props.login.user_id ? <button className="btn-clear" onClick={() => { this.deleteRule(response.id) }}><RiDeleteBin2Fill></RiDeleteBin2Fill></button> : ""}
                         </div>)
 
                         modais.push(<Modal id={response.id} key={key}>
@@ -88,7 +90,7 @@ export class Rules extends Component {
                                     <label>
                                         Descrição:
                                     </label>
-                                    <textarea rows="5" defaultValue={response.description} onChange={(event) => { this.setState({ regraUpdate: event.target.value, idUpdate: response.id });}}>
+                                    <textarea rows="5" defaultValue={response.description} onChange={(event) => { this.setState({ regraUpdate: event.target.value, idUpdate: response.id }); }}>
                                     </textarea>
                                 </div>
                                 <div className="form-group">
