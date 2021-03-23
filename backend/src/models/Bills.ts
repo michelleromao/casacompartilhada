@@ -27,12 +27,12 @@ class Bills{
       } = data;
       const { rows: bills } = await client.query(
         'INSERT INTO bills (name, responsible_id, due, value, home, status, creator_id, home_id) values ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-        [name, responsible_id, due, value, home, false, creator_id, home]
+        [name, responsible_id, due, value, home, false, creator_id, home_id]
       );
       await client.release();
       return bills;
     }catch(err){
-      console.log('Cant create a bill');
+      console.log(err);
     }
   }
 
