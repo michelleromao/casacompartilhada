@@ -14,7 +14,7 @@ export class Item extends Component {
                 <button className="btn-clear">
                     <RiEditCircleFill></RiEditCircleFill>
                 </button>
-                <button className="btn-clear">
+                <button className="btn-clear" onClick={this.props.delete}>
                     <RiDeleteBin2Fill></RiDeleteBin2Fill>
                 </button>
             </div>

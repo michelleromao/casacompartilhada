@@ -6,7 +6,7 @@ export default function Sidebar() {
 
     return (
         <div className="sidebar">
-            <NavLink to="/rules" exact>
+            <NavLink to="/" exact>
                 <label>
                     Regras
                 </label>

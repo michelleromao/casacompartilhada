@@ -20,7 +20,7 @@ export class App extends Component {
 
   routes = () => {
     return (
-      <BrowserRouter>
+      <BrowserRouter >
 
         <Navbar></Navbar>
 
@@ -29,7 +29,7 @@ export class App extends Component {
 
           <div className="body">
 
-            <Route path="/rules">
+            <Route path="/" exact>
               <Rules></Rules>
             </Route>
 

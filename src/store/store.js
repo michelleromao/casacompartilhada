@@ -1,10 +1,16 @@
-import {createStore, combineReducers} from 'redux'
-import rulesReducer from './Rules/Rules.reducer'
+import { configureStore } from "@reduxjs/toolkit";
+import loginSlice from "./Login/Login.reducer";
+import ruleSlice from "./Rules/Rules.reducer";
+import shoppingSlice from "./Shopping/Shopping.reducer";
+import todoSlice from "./ToDo/ToDo.reducer";
+import userSlice from "./User/User.reducer";
 
-const rootReducer = combineReducers({
-    rules: rulesReducer,
+export default configureStore({
+    reducer: {
+        login: loginSlice,
+        rule: ruleSlice,
+        user: userSlice,
+        todo: todoSlice,
+        shopping: shoppingSlice,
+    }
 })
-
-const store = createStore(rootReducer)
-
-export default store

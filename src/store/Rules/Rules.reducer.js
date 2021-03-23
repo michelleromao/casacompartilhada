@@ -1,14 +1,55 @@
-const initialState = [
-    {username: 'georemoreno', msg: 'Não pode deixar casca de fruta em cima da mesa. Não pode deixar casca de fruta em cima da mesa' },
-    {username: 'michelleromao', msg: 'Ao sujar o prato, lave!!!' },
-]
+import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-export default function rulesReducer(state = [], action){
-    switch(action.type){
-        case 'ADD_RULE':
-            initialState.push(action.payload)
-            return initialState
-        default:
-            return initialState
+export const ruleSlice = createSlice({
+    name: 'rule',
+    initialState: {
+        rule: []
+    },
+    reducers: {
+        setRule: (state, action) => {
+            state.rule = action.payload;
+        },
+
+        addRule: (state, action) => {
+            // state.rule.push(action.payload)
+            axios.post("http://localhost:3333/rule/",action.payload).then(
+                function(response) {
+                    console.log(response.status)
+                }
+            )
+        },
+
+        removeRule: (state, action) => {
+            axios.delete("http://localhost:3333/rule/"+action.payload.rule_id, {data: {creator_id: action.payload.user_id}}).then(
+                function(response) {
+                    console.log(response)
+                }
+            )
+        },
+
+        updateRule: (state, action) => {
+            console.log(action.payload)
+            axios.put("http://localhost:3333/rule/"+action.payload.rule_id, {description: action.payload.description, creator_id: action.payload.creator_id}).then(
+                function(response) {
+                    console.log(response.status)                    
+                }
+            )
+        }
+
+    }
+})
+
+export const { setRule, addRule, removeRule, updateRule } = ruleSlice.actions;
+
+export default ruleSlice.reducer;
+
+export function getRule(id_home) {
+    return async function (dispatch) {
+        await axios.get('http://localhost:3333/rule/?home_id=' + id_home).then(
+            res => {
+                dispatch(setRule(res.data))
+            }
+        )
     }
 }

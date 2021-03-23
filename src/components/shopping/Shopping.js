@@ -4,6 +4,8 @@ import $ from 'jquery';
 import Buyed from './Buyed';
 import { RiAddCircleFill } from 'react-icons/ri'
 import Modal from '../Modal';
+import { connect } from 'react-redux';
+import { addShop } from '../../store/Shopping/Shopping.reducer';
 
 export class Shopping extends Component {
     constructor(props) {
@@ -33,8 +35,14 @@ export class Shopping extends Component {
     }
 
     salvar = (event) =>{
+        let item = {
+            item: this.state.item,
+            creator_id: this.props.login.user_id,
+            home_id: this.props.login.home_id,
+        }
         event.preventDefault()
-        console.log(this.state)
+        this.props.addShop(item)
+        $("#addShopping").addClass("d-none")
     }
 
     render() {
@@ -73,4 +81,18 @@ export class Shopping extends Component {
     }
 }
 
-export default Shopping
+const mapStateToProps = (state) => {
+    return {
+        login: state.login,
+    }
+}
+
+const mapDispachToProps = (dispatch) => {
+    return {
+        addShop: (item) =>{
+            dispatch(addShop(item))
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispachToProps)(Shopping)

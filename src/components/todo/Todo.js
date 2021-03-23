@@ -6,6 +6,8 @@ import May from './May'
 import Week from './Week'
 import $ from 'jquery'
 import Modal from '../Modal'
+import { connect } from 'react-redux'
+import { addToDo } from '../../store/ToDo/ToDo.reducer'
 
 export class Todo extends Component {
     constructor(props) {
@@ -14,7 +16,13 @@ export class Todo extends Component {
             show: <Day></Day>,
             tarefa: "",
             frequencia: "",
+            dayOfWeek:null,
+            dayOfMonth :null,
         }
+    }
+
+    componentDidMount(){
+        
     }
 
     changeTodo = (event) => {
@@ -58,7 +66,16 @@ export class Todo extends Component {
 
     addTask = (event) =>{
         event.preventDefault()
-        console.log(this.state)
+        let task = {
+            task: this.state.tarefa,
+            frequency: this.state.frequencia,
+            day_of_week: this.state.dayOfWeek,
+            day_of_month: this.state.dayOfMonth,
+            creator_id: this.props.login.user_id,
+            home_id: this.props.login.home_id
+        }
+        // console.log(task)
+        this.props.addTodo(task)
     }
 
     render() {
@@ -86,17 +103,43 @@ export class Todo extends Component {
                             </label>
                             <input type="text" id="task" required onChange={(event)=>{this.setState({tarefa: event.target.value})}}></input>
                         </div>
+
                         <div className="form-group">
                             <label>
                                 Frequência:
                             </label>
-                            <select required id="frequencia" onChange={(event)=>{this.setState({frequencia: event.target.value})}}>
-                                <option defaultValue hidden>Selecione...</option>
-                                <option value="Diario">Diario</option>
-                                <option value="Semanal">Semanal</option>
-                                <option value="Mensal">Mensal</option>
+                            <select required id="frequencia" onChange={(event)=>{this.setState({frequencia: event.target.value}); $("#"+event.target.value).removeClass("d-none")}}>
+                                <option defaultValue  value="" hidden>Selecione...</option>
+                                <option value="daily">Diario</option>
+                                <option value="weekly">Semanal</option>
+                                <option value="monthly">Mensal</option>
                             </select>
                         </div>
+
+                        <div className="form-group d-none" id="weekly">
+                            <label>
+                                Dia da semana:
+                            </label>
+                            <select id="dayOfWeek" onChange={(event)=>{this.setState({dayOfWeek: event.target.value})}}>
+                                <option defaultValue value="" hidden>Selecione...</option>
+                                domingo, segunda-feira, terca-feira, quarta-feira, quinta-feira, sexta-feira, sabado
+                                <option value="domingo">Domingo</option>
+                                <option value="segunda-feira">Segunda-feira</option>
+                                <option value="terca-feira">Terca-feira</option>
+                                <option value="quarta-feira">Quarta-feira</option>
+                                <option value="quinta-feira">Quinta-feira</option>
+                                <option value="sexta-feira">Sexta-feira</option>
+                                <option value="sabado">Sábado</option>
+                            </select>
+                        </div>
+
+                        <div className="form-group d-none" id="monthly">
+                            <label>
+                                Dia do mês:
+                            </label>
+                            <input type="number" min="1" max="31" onChange={(event)=>{this.setState({dayOfMonth: event.target.value})}}></input>
+                        </div>
+
                         <div className="form-group">
                             <input type="submit" className="btn" value="Salvar"></input>
                         </div>
@@ -110,4 +153,18 @@ export class Todo extends Component {
     }
 }
 
-export default Todo
+const mapStatusToProps = (state) => {
+    return{
+        login: state.login
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        addTodo: (todo) => {
+            dispatch(addToDo(todo))
+        },
+    }
+}
+
+export default connect(mapStatusToProps,mapDispatchToProps)(Todo)

@@ -1,20 +1,19 @@
 import React, {Component} from 'react'
 import { RiEditCircleFill } from 'react-icons/ri'
 import { RiDeleteBin2Fill } from 'react-icons/ri'
+import $ from 'jquery';
 
 export class Item extends Component {
     render() {
         return (
             <div className="todo padding">
-            <input type="checkbox" id={this.props.value}></input>
+            {this.props.selecionar ? <input type="checkbox" id={this.props.value} onChange={this.props.select}></input>: ""}
             <label htmlFor={this.props.value}>
                 {this.props.text}
             </label>
             <div className="actions">
-                <button className="btn-clear">
-                    <RiEditCircleFill></RiEditCircleFill>
-                </button>
-                <button className="btn-clear">
+                {this.props.edit ? <button className="btn-clear" onClick={() => { $("#"+this.props.modal).removeClass("d-none") }}><RiEditCircleFill></RiEditCircleFill></button> : ""}
+                <button className="btn-clear" onClick={this.props.remove}>
                     <RiDeleteBin2Fill></RiDeleteBin2Fill>
                 </button>
             </div>
