@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { buyItem, deleteShop, editItem, getShop } from '../../store/Shopping/Shopping.reducer'
 import Modal from '../Modal'
 import Item from './Item'
+import $ from 'jquery'
 
 export class ToBuy extends Component {
     constructor(props) {
@@ -38,6 +39,12 @@ export class ToBuy extends Component {
             creator_id: this.props.login.user_id
         }
         this.props.editItem(item)
+        $("#"+this.state.idUpdate).addClass('d-none')
+        this.setState({
+            item_id: "",
+            item: "",
+            status: "",
+        })
     }
 
     render() {
@@ -56,7 +63,7 @@ export class ToBuy extends Component {
                                 <label>
                                     Item:
                             </label>
-                                <input type="text" id="task" defaultValue={busca.item} onChange={(event) => { this.setState({ item: event.target.value, idUpdate: busca.id, status: busca.status }) }}></input>
+                                <input type="text" defaultValue={busca.item} onChange={(event) => { this.setState({ item: event.target.value, idUpdate: busca.id, status: busca.status }) }}></input>
                             </div>
                             <div className="form-group">
                                 <input type="submit" className="btn" value="Salvar"></input>

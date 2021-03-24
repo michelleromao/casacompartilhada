@@ -57,14 +57,15 @@ export class Rules extends Component {
 
 
     render() {
+        
         let lista = []
         let modais = []
-
+        
         if (this.props.rule.length > 0 && this.props.user.length > 0) {
             this.props.rule.map((response, key) => {
                 let user = ""
                 return this.props.user.map((busca) => {
-                    if (busca.id === response.cretor_id) {
+                    if (busca.id === response.creator_id) {
                         user = busca.username
                         lista.push(<div className="postit" key={key}>
                             <label className="username">
@@ -77,8 +78,8 @@ export class Rules extends Component {
                                 </label>
                             </div>
 
-                            {response.cretor_id === this.props.login.user_id ? <button className="btn-clear" onClick={() => { $("#" + response.id).removeClass("d-none") }}><RiEditCircleFill></RiEditCircleFill></button>: ""}
-                            {response.cretor_id === this.props.login.user_id ? <button className="btn-clear" onClick={() => { this.deleteRule(response.id) }}><RiDeleteBin2Fill></RiDeleteBin2Fill></button> : ""}
+                            {response.creator_id === this.props.login.user_id ? <button className="btn-clear" onClick={() => { $("#" + response.id).removeClass("d-none") }}><RiEditCircleFill></RiEditCircleFill></button>: ""}
+                            {response.creator_id === this.props.login.user_id ? <button className="btn-clear" onClick={() => { this.deleteRule(response.id) }}><RiDeleteBin2Fill></RiDeleteBin2Fill></button> : ""}
                         </div>)
 
                         modais.push(<Modal id={response.id} key={key}>

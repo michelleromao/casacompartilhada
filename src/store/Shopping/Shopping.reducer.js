@@ -39,7 +39,7 @@ export const shoppingSlice = createSlice({
             // console.log(action.payload)
             axios.put('http://localhost:3333/purchaseitem/' + action.payload.item_id, { item: action.payload.item, status: action.payload.status, creator_id: action.payload.creator_id }).then(
                 function (response) {
-                    console.log(response)
+                    console.log(response.status)
                 }
             )
         }

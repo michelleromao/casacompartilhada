@@ -6,7 +6,8 @@ export const todoSlice = createSlice({
     initialState:{
         daily: [],
         weekly: [],
-        monthly: []
+        monthly: [],
+        does: []
     },
     reducers: {
         setDaily: (state, action) =>{
@@ -17,6 +18,9 @@ export const todoSlice = createSlice({
         },
         setMonthly: (state, action) =>{
             state.monthly = action.payload
+        },
+        setDoes: (state, action) =>{
+            state.does = action.payload
         },
 
         addToDo: (state, action) => {
@@ -43,12 +47,20 @@ export const todoSlice = createSlice({
                 }
             )
         },
+
+        editToDo: (state, action) =>{
+            axios.put("http://localhost:3333/todo/"+action.payload.todo_id , {task: action.payload.task, frequency: action.payload.frequency, day_of_week: action.payload.day_of_week, day_of_month: action.payload.day_of_month, creator_id: action.payload.creator_id}).then(
+                function (response) {
+                    console.log(response.status)
+                }
+            )
+        }
     }
 })
 
 export default todoSlice.reducer
 
-export const { setDaily, setWeekly, setMonthly, addToDo, removeToDo} = todoSlice.actions
+export const { setDaily, setWeekly, setMonthly, addToDo, removeToDo, editToDo, setDoes} = todoSlice.actions
 
 export function getDaily(id_home) {
     return async function (dispatch) {
@@ -71,12 +83,20 @@ export function getWeekly(id_home) {
 }
 
 export function getMonthly(id_home) {
-    console.log(id_home)
     return async function (dispatch) {
         await axios.get('http://localhost:3333/todo/' + id_home +"?frequency=monthly").then(
             res => {
-                console.log(res.data)
                 dispatch(setMonthly(res.data))
+            }
+        )
+    }
+}
+
+export function getDoes(id_home) {
+    return async function (dispatch) {
+        await axios.get('http://localhost:3333/todo/' + id_home +"?does=true").then(
+            res => {
+                dispatch(setDoes(res.data))
             }
         )
     }

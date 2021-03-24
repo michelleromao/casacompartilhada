@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import billSlice from "./Bill/Bill.reducer";
 import loginSlice from "./Login/Login.reducer";
 import ruleSlice from "./Rules/Rules.reducer";
 import shoppingSlice from "./Shopping/Shopping.reducer";
@@ -12,5 +13,6 @@ export default configureStore({
         user: userSlice,
         todo: todoSlice,
         shopping: shoppingSlice,
+        bill: billSlice,
     }
 })

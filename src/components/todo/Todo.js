@@ -74,8 +74,8 @@ export class Todo extends Component {
             creator_id: this.props.login.user_id,
             home_id: this.props.login.home_id
         }
-        // console.log(task)
         this.props.addTodo(task)
+        $("#addToDoDay").addClass("d-none")
     }
 
     render() {
@@ -125,7 +125,7 @@ export class Todo extends Component {
                                 domingo, segunda-feira, terca-feira, quarta-feira, quinta-feira, sexta-feira, sabado
                                 <option value="domingo">Domingo</option>
                                 <option value="segunda-feira">Segunda-feira</option>
-                                <option value="terca-feira">Terca-feira</option>
+                                <option value="terca-feira">Terça-feira</option>
                                 <option value="quarta-feira">Quarta-feira</option>
                                 <option value="quinta-feira">Quinta-feira</option>
                                 <option value="sexta-feira">Sexta-feira</option>
