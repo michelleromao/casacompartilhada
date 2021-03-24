@@ -13,12 +13,10 @@ class Payments{
         payer_id,
         bill_id,
       } = data;
-     await client.query(
+      const pay = await client.query(
         'SELECT bill_status_paid($1)',
         [bill_id]
       );
-      await client.release();
-
       const { rows: payments } = await client.query(
         'INSERT INTO payments (payer_id, bill_id) values ($1, $2) RETURNING *',
         [payer_id, bill_id]
@@ -26,7 +24,7 @@ class Payments{
       await client.release();
       return payments;
     }catch(err){
-      console.log('Cant create a payment');
+      console.log(err);
     }
   }
 
