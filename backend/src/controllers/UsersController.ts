@@ -11,11 +11,20 @@ export = {
   async index(request: Request, response: Response){
     try{
       const { home_id } = request.query;
-      const find = await Users.findByHomeId(home_id);
-      const user = find?.map((user: ShowUserDTO) => {
-        return ({id: user.id, username: user.username, email: user.email});
-      })
-      return response.json(user);
+      if(home_id){
+        const find = await Users.findByHomeId(home_id);
+        const user = find?.map((user: ShowUserDTO) => {
+          return ({id: user.id, username: user.username, email: user.email});
+        })
+        return response.json(user);
+      }else{
+        const find = await Users.findAll();
+        const user = find?.map((user: ShowUserDTO) => {
+          return ({id: user.id, username: user.username, email: user.email});
+        })
+        return response.json(user);
+      }
+
     }catch(err){
       console.log(err);
     }
