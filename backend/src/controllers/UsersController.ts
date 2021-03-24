@@ -74,8 +74,8 @@ export = {
       if(pwdFind){
         bcrypt.compare(password, pwdFind[0], function(err, res) {
           if(res === true){
-            findPwd?.map((user: ShowUserDTO) => {
-              return response.json({id: user.id, username: user.username, email: user.email});
+            findPwd?.map((user: IndexUserDTO) => {
+              return response.json({id: user.id, username: user.username, email: user.email, home_id: user.home_id});
             })
           }else{
             return response.json({message: "Credentials are incorrect"});
