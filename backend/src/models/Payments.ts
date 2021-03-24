@@ -71,12 +71,12 @@ class Payments{
     }
   }
 
-  static async findByBillId(bill_id: string){
+  static async findByHomeId(home_id: string){
     try{
       const client = await pool.connect();
       const { rows: payments } = await client.query(
-        'SELECT * FROM payments P where P.bill_id = $1',
-        [bill_id]
+        'SELECT P.id as payment_id, U.id as payer_id, username, B.id as bill_id, B.name, P.created_at FROM users U INNER JOIN payments P ON U.id = P.payer_id INNER JOIN bills B ON B.home_id = U.home_id AND B.id = P.bill_id AND B.home_id = $1',
+        [home_id]
       );
       await client.release();
       return payments;
