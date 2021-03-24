@@ -69,6 +69,20 @@ class Users{
     }
   }
 
+  static async findByEmail(email: string){
+    try{
+      const client = await pool.connect();
+      const { rows: user } = await client.query(
+        'SELECT * FROM users U where U.email = $1',
+        [email]
+      );
+      await client.release();
+      return user;
+    }catch(err){
+      console.log('Cant find an user');
+    }
+  }
+
   static async update(data: IUsers, user_id: string){
     try{
       const client = await pool.connect();

@@ -61,6 +61,32 @@ export = {
     }
   },
 
+  async login(request: Request, response: Response){
+    try{
+      const{
+        email,
+        password
+      } = request.body;
+      const findPwd = await Users.findByEmail(email);
+      const pwdFind = findPwd?.map((user:IndexUserDTO) => {
+        return user.password;
+      });
+      if(pwdFind){
+        bcrypt.compare(password, pwdFind[0], function(err, res) {
+          if(res === true){
+            findPwd?.map((user: ShowUserDTO) => {
+              return response.json({id: user.id, username: user.username, email: user.email});
+            })
+          }else{
+            return response.json({message: "Credentials are incorrect"});
+          }
+        });
+      }
+    }catch(err){
+      return err;
+    }
+  },
+
   async update(request: Request, response: Response){
     try{
       const {
