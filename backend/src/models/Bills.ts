@@ -96,7 +96,7 @@ class Bills{
     try{
       const client = await pool.connect();
       const { rows: bills } = await client.query(
-        'SELECT * FROM bills B where B.home = $1 AND home_id = $2',
+        'SELECT * FROM bills B where B.home = $1 AND home_id = $2 AND status = false',
         [type, home_id]
       );
       await client.release();
