@@ -13,13 +13,13 @@ class Payments{
         payer_id,
         bill_id,
       } = data;
-      const pay = await client.query(
-        'SELECT bill_status_paid($1)',
-        [bill_id]
-      );
       const { rows: payments } = await client.query(
         'INSERT INTO payments (payer_id, bill_id) values ($1, $2) RETURNING *',
         [payer_id, bill_id]
+      );
+      const pay = await client.query(
+        'SELECT bill_status_paid($1)',
+        [bill_id]
       );
       await client.release();
       return payments;
