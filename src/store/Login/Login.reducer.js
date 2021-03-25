@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { bdurl } from "../bdconfig";
 
 export const loginSlice = createSlice({
     name: 'login',
@@ -31,7 +32,7 @@ export default loginSlice.reducer;
 
 export function loginUser(user) {
     return async function (dispatch) {
-        axios.post("http://localhost:3333/login/",user).then(
+        axios.post(bdurl+"/login/",user).then(
             res => {
                 console.log(res)
                 dispatch(setUser(res.data.id));
@@ -44,7 +45,7 @@ export function loginUser(user) {
 
 export function addHome (user) {
     return async function (dispatch) {
-        axios.post("http://localhost:3333/home/", user).then(
+        axios.post(bdurl+"/home/", user).then(
             res => {
                 dispatch(setHome(res.data[0].id))
                 window.location.reload();

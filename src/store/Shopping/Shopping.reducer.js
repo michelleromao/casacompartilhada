@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { bdurl } from "../bdconfig";
 
 export const shoppingSlice = createSlice({
     name: 'shopping',
@@ -15,7 +16,7 @@ export const shoppingSlice = createSlice({
             state.buyed = action.payload
         },
         addShop: (state, action) => {
-            axios.post('http://localhost:3333/purchaseitem/', action.payload).then(
+            axios.post(bdurl+'/purchaseitem/', action.payload).then(
                 function (response) {
                     console.log(response.status)
                     window.location.reload()
@@ -23,7 +24,7 @@ export const shoppingSlice = createSlice({
             )
         },
         deleteShop: (state, action) => {
-            axios.delete('http://localhost:3333/purchaseitem/' + action.payload.item_id, { data: { creator_id: action.payload.user_id } }).then(
+            axios.delete(bdurl+'/purchaseitem/' + action.payload.item_id, { data: { creator_id: action.payload.user_id } }).then(
                 function (response) {
                     console.log(response.status)
                     window.location.reload()
@@ -31,7 +32,7 @@ export const shoppingSlice = createSlice({
             )
         },
         buyItem: (state, action) => {
-            axios.put('http://localhost:3333/purchaseitem/' + action.payload.item_id + "?buyer_id=" + action.payload.user_id).then(
+            axios.put(bdurl+'/purchaseitem/' + action.payload.item_id + "?buyer_id=" + action.payload.user_id).then(
                 function (response) {
                     console.log(response.status)
                     window.location.reload()
@@ -40,7 +41,7 @@ export const shoppingSlice = createSlice({
         },
         editItem: (state, action) => {
             // console.log(action.payload)
-            axios.put('http://localhost:3333/purchaseitem/' + action.payload.item_id, { item: action.payload.item, status: action.payload.status, creator_id: action.payload.creator_id }).then(
+            axios.put(bdurl+'/purchaseitem/' + action.payload.item_id, { item: action.payload.item, status: action.payload.status, creator_id: action.payload.creator_id }).then(
                 function (response) {
                     console.log(response.status)
                     window.location.reload()
@@ -58,7 +59,7 @@ export const { setShop, setBuyed, addShop, deleteShop, buyItem, editItem } = sho
 
 export function getShop(id_home) {
     return async function (dispatch) {
-        await axios.get('http://localhost:3333/purchaseitem/?status=false&home_id=' + id_home).then(
+        await axios.get(bdurl+'/purchaseitem/?status=false&home_id=' + id_home).then(
             res => {
                 dispatch(setShop(res.data))
             }
@@ -68,7 +69,7 @@ export function getShop(id_home) {
 
 export function getBuyed(id_home) {
     return async function (dispatch) {
-        await axios.get('http://localhost:3333/purchaseitem/?status=true&home_id=' + id_home).then(
+        await axios.get(bdurl+'/purchaseitem/?status=true&home_id=' + id_home).then(
             res => {
                 dispatch(setBuyed(res.data))
             }

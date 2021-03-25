@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { bdurl } from "../bdconfig";
 
 export const ruleSlice = createSlice({
     name: 'rule',
@@ -12,7 +13,7 @@ export const ruleSlice = createSlice({
         },
 
         addRule: (state, action) => {
-            axios.post("http://localhost:3333/rule/",action.payload).then(
+            axios.post(bdurl+"/rule/",action.payload).then(
                 function(response) {
                     console.log(response.status)
                     window.location.reload()
@@ -21,7 +22,7 @@ export const ruleSlice = createSlice({
         },
 
         removeRule: (state, action) => {
-            axios.delete("http://localhost:3333/rule/"+action.payload.rule_id, {data: {creator_id: action.payload.user_id}}).then(
+            axios.delete(bdurl+"/rule/"+action.payload.rule_id, {data: {creator_id: action.payload.user_id}}).then(
                 function(response) {
                     console.log(response.status)
                     window.location.reload()
@@ -31,7 +32,7 @@ export const ruleSlice = createSlice({
 
         updateRule: (state, action) => {
             console.log(action.payload)
-            axios.put("http://localhost:3333/rule/"+action.payload.rule_id, {description: action.payload.description, creator_id: action.payload.creator_id}).then(
+            axios.put(bdurl+"/rule/"+action.payload.rule_id, {description: action.payload.description, creator_id: action.payload.creator_id}).then(
                 function(response) {
                     console.log(response.status)                    
                     window.location.reload()
@@ -48,7 +49,7 @@ export default ruleSlice.reducer;
 
 export function getRule(id_home) {
     return async function (dispatch) {
-        await axios.get('http://localhost:3333/rule/?home_id=' + id_home).then(
+        await axios.get(bdurl+'/rule/?home_id=' + id_home).then(
             res => {
                 dispatch(setRule(res.data))
             }

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { bdurl } from "../bdconfig";
 
 export const userSlice = createSlice({
     name: 'user',
@@ -15,7 +16,7 @@ export const userSlice = createSlice({
             state.allUser = action.payload
         },
         addUser: (state, action) => {
-            axios.post("http://localhost:3333/user/", action.payload).then(
+            axios.post(bdurl+"/user/", action.payload).then(
                 function (response) {
                     console.log(response)
                     window.location.reload()
@@ -23,7 +24,15 @@ export const userSlice = createSlice({
             )
         },
         addHomeInUser: (state, action) => {
-            axios.put("http://localhost:3333/user/"+action.payload.user_id, action.payload.user).then(
+            axios.put(bdurl+"/user/"+action.payload.user_id, action.payload.user).then(
+                function (response) {
+                    console.log(response)
+                    window.location.reload()
+                }
+            )
+        },
+        deleteUser: (state, action) => {
+            axios.delete(bdurl+"/user/"+action.payload).then(
                 function (response) {
                     console.log(response)
                     window.location.reload()
@@ -33,13 +42,13 @@ export const userSlice = createSlice({
     }
 })
 
-export const {setUser, setAllUser, addUser, addHomeInUser} = userSlice.actions
+export const {setUser, setAllUser, addUser, addHomeInUser, deleteUser} = userSlice.actions
 
 export default userSlice.reducer
 
 export function getUser(home_id){
     return async function (dispatch){
-        await axios.get('http://localhost:3333/user/?home_id='+home_id).then(
+        await axios.get(bdurl+'/user/?home_id='+home_id).then(
             res=>{
                 dispatch(setUser(res.data))
             }
@@ -49,7 +58,7 @@ export function getUser(home_id){
 
 export function getAllUser(){
     return async function (dispatch){
-        await axios.get('http://localhost:3333/user/').then(
+        await axios.get(bdurl+'/user/').then(
             res=>{
                 dispatch(setAllUser(res.data))
             }

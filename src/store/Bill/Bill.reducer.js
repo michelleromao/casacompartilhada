@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { bdurl } from "../bdconfig";
 
 export const billSlice = createSlice({
     name: 'bill',
@@ -24,7 +25,7 @@ export const billSlice = createSlice({
         },
 
         addBill: (state, action) => {
-            axios.post("http://localhost:3333/bill/", action.payload).then(
+            axios.post(bdurl+"/bill/", action.payload).then(
                 function (response) {
                     console.log(response.status)
                     window.location.reload()
@@ -32,7 +33,7 @@ export const billSlice = createSlice({
             )
         },
         removeBill: (state, action) => {
-            axios.delete("http://localhost:3333/bill/" + action.payload.bill_id, { data: { creator_id: action.payload.creator_id } }).then(
+            axios.delete(bdurl+"/bill/" + action.payload.bill_id, { data: { creator_id: action.payload.creator_id } }).then(
                 function (response) {
                     console.log(response.status)
                     window.location.reload()
@@ -40,7 +41,7 @@ export const billSlice = createSlice({
             )
         },
         updateBill: (state, action) => {
-            axios.put("http://localhost:3333/bill/" + action.payload.bill_id, action.payload.bill).then(
+            axios.put(bdurl+"/bill/" + action.payload.bill_id, action.payload.bill).then(
                 function (response) {
                     console.log(response.status)
                     window.location.reload()
@@ -48,7 +49,7 @@ export const billSlice = createSlice({
             )
         },
         payBill: (state, action) => {
-            axios.post("http://localhost:3333/pay/", action.payload).then(
+            axios.post(bdurl+"/pay/", action.payload).then(
                 function (response) {
                     console.log(response)
                     window.location.reload()
@@ -64,7 +65,7 @@ export const { setHome, setPayed, setPersonal, addBill, removeBill, updateBill, 
 
 export function getHome(id_home) {
     return async function (dispatch) {
-        await axios.get('http://localhost:3333/bill/?type=true&home_id=' + id_home).then(
+        await axios.get(bdurl+'/bill/?type=true&home_id=' + id_home).then(
             res => {
                 dispatch(setHome(res.data))
             }
@@ -74,7 +75,7 @@ export function getHome(id_home) {
 
 export function getPersonal(id_home) {
     return async function (dispatch) {
-        await axios.get('http://localhost:3333/bill/?type=false&home_id=' + id_home).then(
+        await axios.get(bdurl+'/bill/?type=false&home_id=' + id_home).then(
             res => {
                 dispatch(setPersonal(res.data))
             }
@@ -84,7 +85,7 @@ export function getPersonal(id_home) {
 
 export function getPayments(id_home) {
     return async function (dispatch) {
-        await axios.get('http://localhost:3333/pay/?home_id=' + id_home).then(
+        await axios.get(bdurl+'/pay/?home_id=' + id_home).then(
             res => {
                 dispatch(setPayment(res.data))
             }
@@ -94,7 +95,7 @@ export function getPayments(id_home) {
 
 export function getPayed(id_home) {
     return async function (dispatch) {
-        await axios.get('http://localhost:3333/bill/?type=false&status=true&home_id=' + id_home).then(
+        await axios.get(bdurl+'/bill/?type=false&status=true&home_id=' + id_home).then(
             res => {
                 dispatch(setPayed(res.data))
             }

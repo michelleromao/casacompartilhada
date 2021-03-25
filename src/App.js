@@ -10,7 +10,7 @@ import React, { Component } from 'react'
 import Login from "./components/login/Login";
 import { connect } from "react-redux";
 import House from "./components/house/House";
-import { Config } from "./components/config/Config";
+import Configurar from "./components/config/Configurar";
 
 export class App extends Component {
   constructor(props) {
@@ -48,9 +48,9 @@ export class App extends Component {
               <Bills></Bills>
             </Route>
 
-            {/* <Route path="/config">
-              <Config></Config>
-            </Route> */}
+            <Route path="/config">
+              <Configurar></Configurar>
+            </Route>
           </div>
         </div>
 

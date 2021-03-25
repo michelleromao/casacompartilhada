@@ -54,6 +54,10 @@ body {
     padding: 24px;
 }
 
+.d-flex{
+    display: flex;
+}
+
 /* form */
 
 .form {
@@ -123,6 +127,10 @@ body {
     margin: 5px;
 }
 
+.label-center{
+    text-align: center;
+}
+
 /* modal */
 
 .modal {
@@ -155,12 +163,21 @@ body {
 }
 
 .navbar>.logo {
-    height: 75%;
+    height: 60%;
 }
 
 .navbar-btn {
     position: fixed;
     right: 24px;
+}
+
+.casa-btn {
+    position: fixed;
+    left: 24px;
+}
+
+.navbar > label {
+    color: #6566BE;
 }
 
 /* Sidebar */
