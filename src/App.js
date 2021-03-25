@@ -8,12 +8,15 @@ import Todo from './components/todo/Todo';
 import './style.css'
 import React, { Component } from 'react'
 import Login from "./components/login/Login";
+import { connect } from "react-redux";
+import House from "./components/house/House";
+import { Config } from "./components/config/Config";
 
 export class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      login: true,
+      login: this.props.login.user_id,
       casa: false,
     }
   }
@@ -21,7 +24,7 @@ export class App extends Component {
   routes = () => {
     return (
       <BrowserRouter >
-
+      
         <Navbar></Navbar>
 
         <div className="SideAndBody">
@@ -44,10 +47,24 @@ export class App extends Component {
             <Route path="/bill">
               <Bills></Bills>
             </Route>
+
+            {/* <Route path="/config">
+              <Config></Config>
+            </Route> */}
           </div>
         </div>
 
       </BrowserRouter>
+    )
+  }
+
+  casa = () => {
+    return (
+      <div>
+        <Navbar></Navbar>
+
+        <House></House>
+      </div>
     )
   }
 
@@ -62,10 +79,23 @@ export class App extends Component {
   }
 
   render() {
-    return (
-      this.state.login ? this.routes() : this.login()
-    )
+    if(this.props.login.user_id !== "" && this.props.login.home_id !== "" && this.props.login.home_id !== null){
+      return (this.routes())
+    }
+    else{
+      if(this.props.login.user_id === "" && this.props.login.home_id === ""){
+        return (this.login())
+      }else{
+        return(this.casa())
+      }
+    }
   }
 }
 
-export default App
+const mapStateToProps = (state) =>{
+  return{
+    login: state.login,
+  }
+}
+
+export default connect(mapStateToProps)(App)

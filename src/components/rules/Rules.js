@@ -57,7 +57,6 @@ export class Rules extends Component {
 
 
     render() {
-        
         let lista = []
         let modais = []
         

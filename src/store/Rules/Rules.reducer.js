@@ -12,10 +12,10 @@ export const ruleSlice = createSlice({
         },
 
         addRule: (state, action) => {
-            // state.rule.push(action.payload)
             axios.post("http://localhost:3333/rule/",action.payload).then(
                 function(response) {
                     console.log(response.status)
+                    window.location.reload()
                 }
             )
         },
@@ -23,7 +23,8 @@ export const ruleSlice = createSlice({
         removeRule: (state, action) => {
             axios.delete("http://localhost:3333/rule/"+action.payload.rule_id, {data: {creator_id: action.payload.user_id}}).then(
                 function(response) {
-                    console.log(response)
+                    console.log(response.status)
+                    window.location.reload()
                 }
             )
         },
@@ -33,6 +34,7 @@ export const ruleSlice = createSlice({
             axios.put("http://localhost:3333/rule/"+action.payload.rule_id, {description: action.payload.description, creator_id: action.payload.creator_id}).then(
                 function(response) {
                     console.log(response.status)                    
+                    window.location.reload()
                 }
             )
         }

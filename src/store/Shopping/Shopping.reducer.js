@@ -18,6 +18,7 @@ export const shoppingSlice = createSlice({
             axios.post('http://localhost:3333/purchaseitem/', action.payload).then(
                 function (response) {
                     console.log(response.status)
+                    window.location.reload()
                 }
             )
         },
@@ -25,6 +26,7 @@ export const shoppingSlice = createSlice({
             axios.delete('http://localhost:3333/purchaseitem/' + action.payload.item_id, { data: { creator_id: action.payload.user_id } }).then(
                 function (response) {
                     console.log(response.status)
+                    window.location.reload()
                 }
             )
         },
@@ -32,6 +34,7 @@ export const shoppingSlice = createSlice({
             axios.put('http://localhost:3333/purchaseitem/' + action.payload.item_id + "?buyer_id=" + action.payload.user_id).then(
                 function (response) {
                     console.log(response.status)
+                    window.location.reload()
                 }
             )
         },
@@ -40,6 +43,7 @@ export const shoppingSlice = createSlice({
             axios.put('http://localhost:3333/purchaseitem/' + action.payload.item_id, { item: action.payload.item, status: action.payload.status, creator_id: action.payload.creator_id }).then(
                 function (response) {
                     console.log(response.status)
+                    window.location.reload()
                 }
             )
         }

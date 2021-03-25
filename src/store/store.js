@@ -1,18 +1,22 @@
 import { configureStore } from "@reduxjs/toolkit";
-import billSlice from "./Bill/Bill.reducer";
-import loginSlice from "./Login/Login.reducer";
-import ruleSlice from "./Rules/Rules.reducer";
-import shoppingSlice from "./Shopping/Shopping.reducer";
-import todoSlice from "./ToDo/ToDo.reducer";
-import userSlice from "./User/User.reducer";
+import combineReducers from "./combineReducers";
 
-export default configureStore({
-    reducer: {
-        login: loginSlice,
-        rule: ruleSlice,
-        user: userSlice,
-        todo: todoSlice,
-        shopping: shoppingSlice,
-        bill: billSlice,
-    }
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+    key: 'login',
+    storage,
+    whitelist: ['login'],
+}
+
+const persistedReducer = persistReducer(persistConfig, combineReducers)
+
+const store = configureStore({
+    reducer: persistedReducer,
+    // reducer: combineReducers,
 })
+
+let persistor = persistStore(store)
+
+export {store, persistor}

@@ -28,10 +28,7 @@ export const todoSlice = createSlice({
             axios.post("http://localhost:3333/todo/",action.payload).then(
                 function(response) {
                     console.log(response.status)
-                }
-            ).catch(
-                function(error) { 
-                    console.log(error)
+                    window.location.reload()
                 }
             )
         },
@@ -40,10 +37,7 @@ export const todoSlice = createSlice({
             axios.delete("http://localhost:3333/todo/"+action.payload.todo_id, {data: {creator_id: action.payload.user_id}}).then(
                 function(response) {
                     console.log(response.status)
-                }
-            ).catch(
-                function(error) {
-                    console.log(error)                    
+                    window.location.reload()
                 }
             )
         },
@@ -52,6 +46,7 @@ export const todoSlice = createSlice({
             axios.put("http://localhost:3333/todo/"+action.payload.todo_id , {task: action.payload.task, frequency: action.payload.frequency, day_of_week: action.payload.day_of_week, day_of_month: action.payload.day_of_month, creator_id: action.payload.creator_id}).then(
                 function (response) {
                     console.log(response.status)
+                    window.location.reload()
                 }
             )
         }

@@ -27,6 +27,7 @@ export const billSlice = createSlice({
             axios.post("http://localhost:3333/bill/", action.payload).then(
                 function (response) {
                     console.log(response.status)
+                    window.location.reload()
                 }
             )
         },
@@ -34,6 +35,7 @@ export const billSlice = createSlice({
             axios.delete("http://localhost:3333/bill/" + action.payload.bill_id, { data: { creator_id: action.payload.creator_id } }).then(
                 function (response) {
                     console.log(response.status)
+                    window.location.reload()
                 }
             )
         },
@@ -41,6 +43,7 @@ export const billSlice = createSlice({
             axios.put("http://localhost:3333/bill/" + action.payload.bill_id, action.payload.bill).then(
                 function (response) {
                     console.log(response.status)
+                    window.location.reload()
                 }
             )
         },
@@ -48,6 +51,7 @@ export const billSlice = createSlice({
             axios.post("http://localhost:3333/pay/", action.payload).then(
                 function (response) {
                     console.log(response)
+                    window.location.reload()
                 }
             )
         }

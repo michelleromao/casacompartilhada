@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import $ from 'jquery'; 
+import { connect } from 'react-redux';
+import { addUser, getAllUser } from '../../store/User/User.reducer';
+import { setUser, loginUser } from '../../store/Login/Login.reducer';
 
 export class Login extends Component {
     constructor(props) {
@@ -14,9 +17,17 @@ export class Login extends Component {
         }
     }
 
+    componentDidMount(){
+        this.props.getAllUser()
+    }
+
     logar = (event) => {
         event.preventDefault()
-        console.log(this.state)
+        let user = {
+            email: this.state.usuario,
+            password: this.state.senha,
+        }
+        this.props.loginUser(user)
     }
 
     cadastro = () => {
@@ -26,11 +37,15 @@ export class Login extends Component {
 
     cadastrar = (event) => {
         event.preventDefault()
-        console.log(this.state)
+        let user = {
+            username: this.state.usuarioCadastro,
+            email: this.state.emailCadastro,
+            password: this.state.senhaCadastro,
+        }
+        this.props.addUser(user);
     }
 
     render() {
-
         return (
             <div className="login body">
                 <div className="form padding" id="login">
@@ -41,7 +56,7 @@ export class Login extends Component {
                     <form onSubmit={this.logar}>
                         <div className="form-group">
                             <label>
-                                Usuário:
+                                E-mail:
                         </label>
                             <input type="text" required onChange={(event) => {
                                 this.setState({
@@ -116,4 +131,27 @@ export class Login extends Component {
     }
 }
 
-export default Login
+const mapStateToProps = (state) =>{
+    return{
+        allUser: state.user.allUser
+    }
+} 
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getAllUser: () => {
+            dispatch(getAllUser())
+        },
+        addUser: (user) =>{
+            dispatch(addUser(user))
+        },
+        setUser: (user) => {
+            dispatch(setUser(user))
+        },
+        loginUser: (user) => {
+            dispatch(loginUser(user))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

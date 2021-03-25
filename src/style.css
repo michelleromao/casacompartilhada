@@ -118,6 +118,11 @@ body {
     display: none !important;
 }
 
+.config {
+    display: inline-block;
+    margin: 5px;
+}
+
 /* modal */
 
 .modal {
