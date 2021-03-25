@@ -34,10 +34,11 @@ export = {
   async update(request: Request, response: Response){
     try{
       const {
-        name
+        name,
+        creator_id
       } : UpdateHomeDTO = request.body;
       const { id } = request.params;
-      const updatedHome = await Homes.update({name},id);
+      const updatedHome = await Homes.update({name, creator_id},id);
       const home = updatedHome?.map((home: IndexHomeDTO) => {
         return ({id: home.id, name: home.name, creator: home.creator_id});
       });
