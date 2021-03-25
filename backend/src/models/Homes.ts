@@ -57,14 +57,9 @@ class Home{
     }
   }
 
-  static async update(data: IHome, creator_id: string){
+  static async update(name: string, id: string, creator_id: string){
     try{
       const client = await pool.connect();
-      const {
-        name,
-        id
-      } = data;
-
       const now: string = format((new Date()), "yyyy-MM-dd HH:mm:ss.ssss");
       const { rows: home } = await client.query(
         'UPDATE homes H SET name = $1, updated_at = $2 WHERE H.creator_id = $3 AND H.id = $4 RETURNING *',
@@ -73,7 +68,7 @@ class Home{
       await client.release();
       return home;
     }catch(err){
-      console.log('Cant update a home');
+      console.log(err);
     }
   }
 
