@@ -5,18 +5,10 @@ import IndexPaymentDTO from "../interfaces/IndexPaymentDTO";
 export = {
   async index(request: Request, response: Response){
     try{
-      const { bill_id } = request.query;
-      const bill_idStr = String(bill_id);
-      const find = await Payments.findByBillId(bill_idStr);
-      const payment = find?.map((payment : IndexPaymentDTO) => {
-        return({
-          payer_id: payment.payer_id,
-          bill_id: payment.bill_id,
-        });
-      })
-      if(payment){
-        return response.json(payment);
-      }
+      const { home_id } = request.query;
+      const home_idStr = String(home_id);
+      const find = await Payments.findByHomeId(home_idStr);
+      return response.json(find);
     }catch(err){
       console.log(err);
     }

@@ -12,11 +12,20 @@ export = {
     try{
       const { home_id } = request.query;
       const home_idStr = String(home_id);
-      const find = await Users.findByHomeId(home_idStr);
-      const user = find?.map((user: ShowUserDTO) => {
-        return ({id: user.id, username: user.username, email: user.email});
-      })
-      return response.json(user);
+      if(home_id){
+        const find = await Users.findByHomeId(home_idStr);
+        const user = find?.map((user: ShowUserDTO) => {
+          return ({id: user.id, username: user.username, email: user.email});
+        })
+        return response.json(user);
+      }else{
+        const find = await Users.findAll();
+        const user = find?.map((user: ShowUserDTO) => {
+          return ({id: user.id, username: user.username, email: user.email});
+        })
+        return response.json(user);
+      }
+
     }catch(err){
       console.log(err);
     }
@@ -50,6 +59,32 @@ export = {
       });
     }catch(err){
       console.log(err);
+    }
+  },
+
+  async login(request: Request, response: Response){
+    try{
+      const{
+        email,
+        password
+      } = request.body;
+      const findPwd = await Users.findByEmail(email);
+      const pwdFind = findPwd?.map((user:IndexUserDTO) => {
+        return user.password;
+      });
+      if(pwdFind){
+        bcrypt.compare(password, pwdFind[0], function(err, res) {
+          if(res === true){
+            findPwd?.map((user: IndexUserDTO) => {
+              return response.json({id: user.id, username: user.username, email: user.email, home_id: user.home_id});
+            })
+          }else{
+            return response.json({message: "Credentials are incorrect"});
+          }
+        });
+      }
+    }catch(err){
+      return err;
     }
   },
 

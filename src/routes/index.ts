@@ -1,4 +1,5 @@
 import {Router} from 'express';
+import loginRoutes from './login.routes';
 import homeRoutes from './home.routes';
 import userRoutes from './user.routes';
 import todoRoutes from './todo.routes';
@@ -10,6 +11,7 @@ import payRoutes from './pay.routes';
 
 const routes = Router();
 
+routes.use('/login/', loginRoutes);
 routes.use('/home/', homeRoutes);
 routes.use('/user/', userRoutes);
 routes.use('/todo/', todoRoutes);

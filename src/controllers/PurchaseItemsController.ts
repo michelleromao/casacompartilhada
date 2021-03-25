@@ -58,7 +58,7 @@ export = {
     try{
       const { id } = request.params;
       const { buyer_id } = request.query;
-      var buyer_idStr = String(buyer_id);
+      const buyer_idStr = String(buyer_id);
       if(buyer_id){
         const purchase_item = await PurchaseItems.updateBuyer(buyer_idStr, id);
         return response.json(purchase_item);

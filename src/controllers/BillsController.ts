@@ -8,9 +8,9 @@ export = {
     try {
       const { status, type, home_id } = request.query;
       const statusStr = String(status);
-      const home_idStr = String(home_id);
       const typeStr = String(type);
-      if (statusStr) {
+      const home_idStr = String(home_id);
+      if (status) {
         const find = await Bills.findByStatus(statusStr, home_idStr);
         const bills = find?.map((bill: IndexBillDTO) => {
           return ({
@@ -22,6 +22,7 @@ export = {
             home: bill.home,
             status: bill.status,
             creator_id: bill.creator_id,
+            home_id: bill.home_id,
           });
         });
         if (bills) {
@@ -39,6 +40,7 @@ export = {
             home: bill.home,
             status: bill.status,
             creator_id: bill.creator_id,
+            home_id: bill.home_id,
           });
         })
         if (bills) {

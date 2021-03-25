@@ -7,4 +7,5 @@ export default interface IndexBillDTO {
   home: boolean;
   status: boolean;
   creator_id: string;
+  home_id: string;
 }
