@@ -23,7 +23,7 @@ export class App extends Component {
 
   routes = () => {
     return (
-      <BrowserRouter >
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
       
         <Navbar></Navbar>
 
