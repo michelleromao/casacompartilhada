@@ -8,7 +8,7 @@ export class Item extends Component {
     render() {
         return (
             <div className="todo padding">
-                {!this.props.check ? <input type="checkbox" id={this.props.value}></input> : ""}
+                {!this.props.check ? <input type="checkbox" onChange={this.props.doer}></input> : ""}
                 <label htmlFor={this.props.value}>
                     {this.props.text}
                     {this.props.user ? <label><br></br>@{this.props.user} - {format(utcToZonedTime(new Date(this.props.create)), 'dd/MM/yyyy')}</label> : ""}

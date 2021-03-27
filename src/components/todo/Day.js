@@ -1,7 +1,7 @@
 import Item from './Item';
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { editToDo, getDaily, removeToDo } from '../../store/ToDo/ToDo.reducer';
+import { doTodo, editToDo, getDaily, removeToDo } from '../../store/ToDo/ToDo.reducer';
 import Modal from '../Modal';
 import $ from 'jquery'
 
@@ -48,6 +48,10 @@ export class Day extends Component {
         })
     }
 
+    doTodo (id) {
+        this.props.doTodo({doer_id: this.props.login.user_id, id: id})
+    }
+
     render() {
         let lista = []
         let modais = []
@@ -55,7 +59,7 @@ export class Day extends Component {
         if (this.props.daily !== undefined) {
             this.props.daily.map((busca, index) => {
                 return busca.map((response) => {
-                    lista.push(<Item text={response.task} value={index} edited={() => { $("#" + response.id).removeClass("d-none") }} edit={response.creator_id === this.props.login.user_id} delete={() => this.delete(response.id)} key={index}></Item>)
+                    lista.push(<Item text={response.task} doer={()=>{this.doTodo(response.id)}} value={index} edited={() => { $("#" + response.id).removeClass("d-none") }} edit={response.creator_id === this.props.login.user_id} delete={() => this.delete(response.id)} key={index}></Item>)
                     modais.push(
                         <Modal key={index} id={response.id}>
                             <h2>
@@ -106,6 +110,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         editToDo: (item) => {
             dispatch(editToDo(item))
+        },
+        doTodo: (todo) => {
+            dispatch(doTodo(todo))
         }
     }
 }

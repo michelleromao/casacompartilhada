@@ -50,13 +50,22 @@ export const todoSlice = createSlice({
                     window.location.reload()
                 }
             )
+        },
+
+        doTodo: (state, action) => {
+            axios.post(bdurl+"/does/", {doer_id: action.payload.doer_id, id: action.payload.id}).then(
+                function (response) {
+                    console.log(response.status)
+                    window.location.reload()
+                }
+            )
         }
     }
 })
 
 export default todoSlice.reducer
 
-export const { setDaily, setWeekly, setMonthly, addToDo, removeToDo, editToDo, setDoes} = todoSlice.actions
+export const { setDaily, setWeekly, setMonthly, addToDo, removeToDo, editToDo, setDoes, doTodo} = todoSlice.actions
 
 export function getDaily(id_home) {
     return async function (dispatch) {

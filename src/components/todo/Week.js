@@ -1,7 +1,7 @@
 import Item from './Item';
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { editToDo, getWeekly } from '../../store/ToDo/ToDo.reducer';
+import { doTodo, editToDo, getWeekly } from '../../store/ToDo/ToDo.reducer';
 import $ from 'jquery'
 import Modal from '../Modal';
 
@@ -48,13 +48,17 @@ export class Week extends Component {
         })
     }
 
+    doTodo (id) {
+        this.props.doTodo({doer_id: this.props.login.user_id, id: id})
+    }
+
     render() {
         let lista = []
         let modais = []
         if (this.props.weekly !== undefined) {
             this.props.weekly.map((busca, index) => {
                 return busca.map((response) => {
-                    lista.push(<Item text={response.task} value={index} edit={response.creator_id === this.props.login.user_id} edited={() => { $("#" + response.id).removeClass("d-none") }} delete={() => this.delete(response.id)} key={index}></Item>)
+                    lista.push(<Item text={response.task} doer={()=>{this.doTodo(response.id)}} value={index} edit={response.creator_id === this.props.login.user_id} edited={() => { $("#" + response.id).removeClass("d-none") }} delete={() => this.delete(response.id)} key={index}></Item>)
                     modais.push(
                         <Modal key={index} id={response.id}>
                             <h2>
@@ -118,6 +122,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         editToDo: (item) => {
             dispatch(editToDo(item))
+        },
+        doTodo: (todo) => {
+            dispatch(doTodo(todo))
         }
     }
 }
