@@ -11,7 +11,7 @@ export = {
       const { id } = request.params;
       const find = await Homes.findById(id);
       const home = find?.map((home: IndexHomeDTO) => {
-        return ({id: home.id, name: home.name, creator: home.creator_id});
+        return ({id: home.id, name: home.name, creator_id: home.creator_id});
       })
       if(home){
         return response.json(home[0]);
@@ -34,16 +34,13 @@ export = {
   async update(request: Request, response: Response){
     try{
       const {
-        name
-      } : UpdateHomeDTO = request.body;
+        name,
+        creator_id
+      } = request.body;
       const { id } = request.params;
-      const updatedHome = await Homes.update({name},id);
-      const home = updatedHome?.map((home: IndexHomeDTO) => {
-        return ({id: home.id, name: home.name, creator: home.creator_id});
-      });
-      if(home){
-        return response.json(home[0]);
-      }
+      const updatedHome = await Homes.update(name, id, creator_id);
+      return response.json(updatedHome);
+
     }catch(err){
       console.log(err);
     }
