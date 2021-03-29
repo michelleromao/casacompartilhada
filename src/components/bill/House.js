@@ -83,13 +83,17 @@ export class House extends Component {
             this.props.home.map((response, index) => {
                 this.props.user.map((busca) => {
                     let payments = []
+                    let payer_id = false
                     this.props.payment.map((payment)=>{
                         if(payment.bill_id === response.id){
+                            if(payment.payer_id === this.props.login.user_id){
+                                payer_id = true
+                            }
                             payments.push("@"+payment.username)
                         }
                     })
                     if (busca.id === response.responsible_id) {
-                        lista.push(<Item value={index} payments={payments} checked={() => { this.pagarConta(response.id) }} remove={() => { this.apagar(response.id) }} edited={() => { $("#" + response.id).removeClass("d-none") }} edit={this.props.login.user_id === response.creator_id} del={this.props.login.user_id === response.creator_id} key={index} user={busca.username} values={response}></Item>)
+                        lista.push(<Item value={index} payments={payments} checked={() => { this.pagarConta(response.id) }} check={payer_id} remove={() => { this.apagar(response.id) }} edited={() => { $("#" + response.id).removeClass("d-none") }} edit={this.props.login.user_id === response.creator_id} del={this.props.login.user_id === response.creator_id} key={index} user={busca.username} values={response}></Item>)
                         modais.push(
                             <Modal id={response.id} key={index}>
                                 <h2>
